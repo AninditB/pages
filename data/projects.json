@@ -1,0 +1,7 @@
+[
+  {
+    "title": "Buy & Sell Store",
+    "description": "Full-stack e-commerce app using React, Spring Boot, GraphQL, MongoDB.",
+    "tech": ["React", "Spring Boot", "GraphQL", "MongoDB"]
+  }
+]
