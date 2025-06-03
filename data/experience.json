@@ -1,8 +1,44 @@
 [
   {
     "role": "Associate Consultant",
-    "company": "Capgemini",
+    "company": "Capgemini Pvt. Ltd.",
+    "location": "Hyderabad, India",
     "duration": "Jan 2022 – Jul 2023",
-    "details": "Built Spring Boot microservices, integrated messaging queues, deployed using Docker and Kubernetes."
+    "techStack": "Java 8/11, Spring Boot, Spring Framework (MVC, Cloud, Integration), REST APIs, JUnit, Mockito, RabbitMQ, IBM MQ, Docker, Kubernetes, Jenkins, Git, Guidewire PolicyCenter, Splunk, Postman, PCF, Agile",
+    "details": [
+      "Designed and developed backend microservices using Spring Boot and Spring Framework Core/MVC, implementing RESTful APIs for policy lifecycle management within Guidewire PolicyCenter.",
+      "Engineered asynchronous messaging flows with RabbitMQ and IBM WebSphere MQ, enabling reliable communication with upstream and downstream systems as part of an event-driven architecture.",
+      "Integrated Spring Cloud Data Stream to support inter-module communication across services while optimizing message flow pipelines using Spring Integration.",
+      "Implemented unit and integration tests using JUnit, Mockito, and Postman, and contributed to API test coverage and maintainability in CI/CD pipelines via Jenkins and Git.",
+      "Deployed microservices in Dockerized environments on Kubernetes and PCF, collaborating with DevOps and CloudOps teams for staging and production releases.",
+      "Worked within Agile sprint cycles, participating in backlog grooming, release planning, and QA automation using Cucumber and manual testing of APIs for SDET-level validation."
+    ]
+  },
+  {
+    "role": "Senior Software Engineer",
+    "company": "Capgemini Pvt. Ltd.",
+    "location": "Kolkata, India",
+    "duration": "Oct 2020 – Dec 2021",
+    "techStack": "Java 8, Spring MVC, Spring Boot, AWS Lambda, S3, IAM, SOAP, REST, Terraform, Jenkins, JUnit, JBOSS, ESB, Agile",
+    "details": [
+      "Refactored and modularized premium rating and validation workflows using Spring MVC, Spring Boot, and Gosu for Guidewire PolicyCenter, optimizing logic across 5+ insurance products and reducing downstream policy correction issues.",
+      "Developed and deployed RESTful web services with secure integration into SOAP-based legacy platforms via JBOSS and ESB, ensuring consistent communication with billing and claims modules.",
+      "Led cloud migration efforts by developing AWS Lambda-backed microservices with integrations to S3 and IAM, and codified infrastructure using Terraform for repeatable deployments.",
+      "Built testable modules and reusable components with JUnit and Mockito, while also supporting CI/CD workflows in Jenkins and aligning changes with business-facing Agile ceremonies.",
+      "Studied and applied architectural patterns related to scalability, fault tolerance, and inter-system communication, improving reliability and resilience across distributed components."
+    ]
+  },
+  {
+    "role": "Software Engineer",
+    "company": "Capgemini Pvt. Ltd.",
+    "location": "Kolkata, India",
+    "duration": "Sep 2019 – Sep 2020",
+    "techStack": "Java 8, J2EE, Servlets, Spring Boot, Spring MVC, Hibernate, IBM MQ, JMS, AKKA, REST APIs, Jenkins, Docker, Git, ReactJS, JSON/XML, Agile",
+    "details": [
+      "Developed a static code validation tool using Spring Boot, Spring MVC, and Hibernate, designed to scan and validate 10K+ Guidewire configuration files and Gosu code for compliance with naming and structure standards.",
+      "Integrated messaging simulations using IBM MQ and JMS, helping teams validate message-based workflows between upstream/downstream services within an ESB architecture.",
+      "Remodeled legacy monolithic applications into microservices using Spring Boot, Spring Security, JPA, and REST APIs, preparing them for containerized deployment via Docker and automated rollout through Jenkins.",
+      "Contributed to high-performance, concurrent processing modules using the AKKA framework, enhancing scalability for rules-based simulations with improved multithreading control."
+    ]
   }
 ]
