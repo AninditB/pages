@@ -112,9 +112,9 @@ const formatters = {
         <strong>🎓 ${item.degree}</strong>
         <div class="card-actions">
           <button class="modal-btn" onclick="event.stopPropagation(); openModal('education', ${index})" title="View Details">
-            👁️
+            +
           </button>
-          <span class="expand-icon">+</span>
+           <span class="expand-icon">+</span>
         </div>
       </div>
       <div style="color: var(--accent); font-weight: 500; margin: 0.5rem 0;">
