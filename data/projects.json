@@ -1,7 +1,22 @@
 [
   {
+    "title": "BlueSky Airline Management System",
+    "description": "End-to-end Oracle SQL project: Architected a 15-table airline database to track airports, aircraft, flights, customers, bookings, employees, maintenance, and payments. Implemented 20+ operational and analytical SQL queries (e.g., active flight lookups, maintenance alerts, occupancy rates, revenue metrics). Built transaction-safe logic for crew scheduling, cargo management, and aircraft decommissioning. Enabled executive reporting with multi-table analytical queries for route efficiency, monthly revenue, busiest routes, and maintenance costs.",
+    "tech": ["Oracle SQL", "PL/SQL", "ER Modeling", "Joins", "Aggregates", "Transactions", "Constraints"]
+  },
+  {
+    "title": "False Sharing Detection in Multithreaded Programs using Machine Learning",
+    "description": "Designed and implemented a machine learning–based system to detect false sharing and inefficient memory access in multithreaded applications. Collected 2,000+ performance records via perf on the Brooks HPC server, processed with Pandas, and balanced classes using SMOTE. Trained a Decision Tree classifier (entropy-based) achieving ~72% accuracy and F1 > 0.72. Provided feature importance insights on dTLB load misses and backend stalled cycles to guide developers on memory optimizations.",
+    "tech": ["Python", "Scikit-learn", "perf", "SMOTE", "Pandas", "Decision Trees", "Brooks Server", "HPC Profiling"]
+  },
+  {
     "title": "Buy & Sell Store",
-    "description": "Full-stack e-commerce app using React, Spring Boot, GraphQL, MongoDB.",
-    "tech": ["React", "Spring Boot", "GraphQL", "MongoDB"]
+    "description": "Full-stack e-commerce web application with distinct Buyer, Seller, and Admin roles. Built dynamic product listings, secure authentication, cart/wishlist features, and profile management using React, Spring Boot, GraphQL, and MongoDB. Developed seller dashboards featuring low-stock alerts, real-time revenue tracking, and visual sales insights (bar, pie, line charts). Ensured reliability through JUnit and React Testing Library, covering login, registration, cart actions, item uploads, and secure password hashing with BCrypt.",
+    "tech": ["React.js", "Spring Boot", "GraphQL", "MongoDB", "JUnit", "Styled Components", "Git"]
+  },
+  {
+    "title": "TrailLink",
+    "description": "Cross-platform trekking coordination app enabling real-time group navigation, chat, weather updates, SOS alerts, and event management. Designed a scalable MongoDB Atlas schema for trek posts, chat logs, user profiles, and event participation. Integrated Open-Meteo API for geocoded weather, Google Maps for topographic route visualization, and JWT-based authentication for all endpoints. Validated performance (<350 ms REST latency at 500 concurrent users, 80 ms WebSocket delivery with 99.5% success) and achieved an SUS score of 84 in pilot usability testing.",
+    "tech": ["React Native (Expo)", "Node.js", "Express", "MongoDB Atlas", "WebSockets", "Open-Meteo API", "Google Maps", "JWT", "Bcrypt"]
   }
 ]

@@ -51,7 +51,7 @@ const formatters = {
           <button class="modal-btn" onclick="event.stopPropagation(); openModal('project', ${index})" title="View Details">
             👁️
           </button>
-          <span class="expand-icon">+</span>
+         
         </div>
       </div>
       <div class="card-preview" style="margin: 0.5rem 0; color: var(--text-secondary);">
@@ -75,7 +75,7 @@ const formatters = {
           <button class="modal-btn" onclick="event.stopPropagation(); openModal('experience', ${index})" title="View Details">
             👁️
           </button>
-          <span class="expand-icon">+</span>
+         
         </div>
       </div>
       <div class="card-meta">
@@ -112,9 +112,9 @@ const formatters = {
         <strong>🎓 ${item.degree}</strong>
         <div class="card-actions">
           <button class="modal-btn" onclick="event.stopPropagation(); openModal('education', ${index})" title="View Details">
-            +
+            👁️
           </button>
-           <span class="expand-icon">+</span>
+           
         </div>
       </div>
       <div style="color: var(--accent); font-weight: 500; margin: 0.5rem 0;">
@@ -513,3 +513,20 @@ function throttle(func, wait) {
     timeout = setTimeout(later, wait);
   };
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('theme-toggle');
+  const isLight = localStorage.getItem('theme') === 'light';
+
+  if (isLight) {
+    document.body.classList.add('light-mode');
+    toggle.textContent = '🌙 Switch to Dark Mode';
+  }
+
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('light-mode');
+    const isLightNow = document.body.classList.contains('light-mode');
+    toggle.textContent = isLightNow ? '🌙 Switch to Dark Mode' : '🌞 Switch to Light Mode';
+    localStorage.setItem('theme', isLightNow ? 'light' : 'dark');
+  });
+});
