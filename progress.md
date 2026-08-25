@@ -1,0 +1,31 @@
+# Portfolio Progress
+
+## Completed
+
+- Created the main portfolio page in `index.html`.
+- Added styling and responsive layout in `style.css`.
+- Added dynamic rendering logic in `script.js`.
+- Added JSON data files for projects, experience, education, and skills.
+- Added expandable cards for portfolio sections.
+- Added modal detail views for projects, experience, and education.
+- Added sharing actions for LinkedIn, Twitter, and copy link.
+- Added dark/light theme toggle with saved preference.
+- Added smooth scrolling and scroll-based section animations.
+- Added `FLOWCHART.md` with Mermaid diagrams for the site flow.
+- Checked for text encoding issues in visible labels/icons — none found (audited HTML, JS, and JSON; all clean UTF-8).
+- Added keyboard support for expandable cards (Tab focus, Enter/Space to toggle, visible focus ring) and fixed a dead `.expand-icon` reference that was throwing a console error on every card click.
+- Added accessibility to the detail modal: dialog role/labelling, focus moves into the modal on open and returns to the trigger on close, and Tab/Shift+Tab are trapped inside it while open.
+- Added `rel="noopener noreferrer"` to the external "View Project" links.
+- Removed the unused, empty `script/main.js`.
+- Added a deployed site link and setup/structure/maintenance notes to `README.md`.
+
+## To Do
+
+- Manually verify the site in desktop and mobile browser sizes (existing `@media (max-width: 768px)` breakpoint has not been re-tested since the card/modal markup changes above).
+
+## Notes
+
+- Main entry point: `index.html`
+- Main script: `script.js`
+- Main stylesheet: `style.css`
+- Data source folder: `data/`

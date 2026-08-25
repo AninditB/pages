@@ -44,11 +44,11 @@ function animateOnScroll() {
 // Enhanced formatters with expandable content and modal buttons
 const formatters = {
   projects: (item, index) => `
-    <div class="card expandable-card" onclick="toggleCard(this)">
+    <div class="card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
       <div class="card-header">
         <strong>🎯 ${item.title}</strong>
         <div class="card-actions">
-          <button class="modal-btn" onclick="event.stopPropagation(); openModal('project', ${index})" title="View Details">
+          <button class="modal-btn" onclick="event.stopPropagation(); openModal('projects', ${index})" title="View Details" aria-label="View project details">
             👁️
           </button>
          
@@ -62,17 +62,17 @@ const formatters = {
           ${item.description}
         </div>
         <em>${Array.isArray(item.tech) ? item.tech.join(' • ') : item.tech}</em>
-        ${item.link ? `<div style="margin-top: 1rem;"><a href="${item.link}" target="_blank" style="color: var(--accent); text-decoration: none;">🔗 View Project</a></div>` : ''}
+        ${item.link ? `<div style="margin-top: 1rem;"><a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">🔗 View Project</a></div>` : ''}
       </div>
     </div>
   `,
   
   experience: (item, index) => `
-    <div class="card expandable-card" onclick="toggleCard(this)">
+    <div class="card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
       <div class="card-header">
         <strong>💼 ${item.role}</strong>
         <div class="card-actions">
-          <button class="modal-btn" onclick="event.stopPropagation(); openModal('experience', ${index})" title="View Details">
+          <button class="modal-btn" onclick="event.stopPropagation(); openModal('experience', ${index})" title="View Details" aria-label="View experience details">
             👁️
           </button>
          
@@ -107,11 +107,11 @@ const formatters = {
   `,
   
   education: (item, index) => `
-    <div class="card expandable-card" onclick="toggleCard(this)">
+    <div class="card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
       <div class="card-header">
         <strong>🎓 ${item.degree}</strong>
         <div class="card-actions">
-          <button class="modal-btn" onclick="event.stopPropagation(); openModal('education', ${index})" title="View Details">
+          <button class="modal-btn" onclick="event.stopPropagation(); openModal('education', ${index})" title="View Details" aria-label="View education details">
             👁️
           </button>
            
@@ -140,34 +140,63 @@ let portfolioData = {
 function toggleCard(card) {
   const details = card.querySelector('.card-details');
   const preview = card.querySelector('.card-preview');
-  const icon = card.querySelector('.expand-icon');
   const isExpanded = details.style.display !== 'none';
-  
+
   if (isExpanded) {
     // Collapse
     details.style.display = 'none';
     if (preview) preview.style.display = 'block';
-    icon.textContent = '+';
     card.classList.remove('expanded');
+    card.setAttribute('aria-expanded', 'false');
   } else {
     // Expand
     details.style.display = 'block';
     if (preview) preview.style.display = 'none';
-    icon.textContent = '−';
     card.classList.add('expanded');
+    card.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// Allow cards to be toggled via keyboard (Enter/Space)
+function handleCardKeydown(event, card) {
+  if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+    event.preventDefault();
+    toggleCard(card);
   }
 }
 
 // Modal functionality
+let modalTriggerElement = null;
+
+function trapFocus(e) {
+  if (e.key !== 'Tab') return;
+  const content = document.querySelector('.modal-overlay .modal-content');
+  if (!content) return;
+  const focusable = content.querySelectorAll(
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+  );
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 function createModal() {
   if (document.querySelector('.modal-overlay')) return;
-  
+
   const modalHTML = `
     <div class="modal-overlay" onclick="closeModal(event)">
-      <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1" onclick="event.stopPropagation()">
         <div class="modal-header">
-          <h3 class="modal-title"></h3>
-          <button class="modal-close" onclick="closeModal()">&times;</button>
+          <h3 class="modal-title" id="modal-title"></h3>
+          <button class="modal-close" onclick="closeModal()" aria-label="Close dialog">&times;</button>
         </div>
         <div class="modal-meta"></div>
         <div class="modal-body"></div>
@@ -193,8 +222,9 @@ function createModal() {
 }
 
 function openModal(type, index) {
+  modalTriggerElement = document.activeElement;
   createModal();
-  
+
   const modal = document.querySelector('.modal-overlay');
   const title = modal.querySelector('.modal-title');
   const meta = modal.querySelector('.modal-meta');
@@ -207,7 +237,7 @@ function openModal(type, index) {
   window.currentModalData = { type, index, data };
   
   switch (type) {
-    case 'project':
+    case 'projects':
       title.textContent = data.title;
       meta.innerHTML = `
         <div class="tech-stack">
@@ -230,7 +260,7 @@ function openModal(type, index) {
         ` : ''}
         ${data.link ? `
           <div style="margin-top: 2rem; text-align: center;">
-            <a href="${data.link}" target="_blank" style="
+            <a href="${data.link}" target="_blank" rel="noopener noreferrer" style="
               display: inline-flex;
               align-items: center;
               gap: 0.5rem;
@@ -309,21 +339,28 @@ function openModal(type, index) {
   // Show modal with animation
   requestAnimationFrame(() => {
     modal.classList.add('active');
+    modal.querySelector('.modal-content').focus();
   });
-  
+
   // Prevent body scrolling
   document.body.style.overflow = 'hidden';
+  document.addEventListener('keydown', trapFocus);
 }
 
 function closeModal(event) {
   if (event && event.target !== event.currentTarget) return;
-  
+
   const modal = document.querySelector('.modal-overlay');
   if (modal) {
     modal.classList.remove('active');
+    document.removeEventListener('keydown', trapFocus);
     setTimeout(() => {
       modal.remove();
       document.body.style.overflow = '';
+      if (modalTriggerElement) {
+        modalTriggerElement.focus();
+        modalTriggerElement = null;
+      }
     }, 300);
   }
 }
@@ -335,7 +372,7 @@ function shareOnLinkedIn() {
   
   let shareText = '';
   switch (type) {
-    case 'project':
+    case 'projects':
       shareText = `Check out this project: ${data.title}`;
       break;
     case 'experience':
@@ -356,7 +393,7 @@ function shareOnTwitter() {
   
   let shareText = '';
   switch (type) {
-    case 'project':
+    case 'projects':
       shareText = `Check out this project: ${data.title} 🚀`;
       break;
     case 'experience':

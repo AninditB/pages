@@ -228,6 +228,11 @@ h2::after {
   border-left-color: var(--accent);
 }
 
+.expandable-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -356,6 +361,10 @@ h2::after {
   transform: scale(0.8) translateY(50px);
   transition: all 0.3s ease;
   border-left: 4px solid var(--accent);
+}
+
+.modal-content:focus {
+  outline: none;
 }
 
 .modal-overlay.active .modal-content {
