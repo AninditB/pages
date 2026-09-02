@@ -7,72 +7,111 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="header-content">
-        <nav class="section-index">
-          <a href="#projects">🚀 Projects</a>
-          <a href="#experience">💼 Experience</a>
-          <a href="#education">🎓 Education</a>
-          <a href="#skills">⚡ Skills</a>
-          <a href="#contact">📬 Contact</a>
-        </nav>
-        <button id="theme-toggle" class="theme-toggle">🌞 Switch to Light Mode</button>
-        <h1>Anindit Bordoloi</h1>
-        <p class="subtitle">Software Engineer | Java | Spring Boot | MongoDB</p>
-        <div class="header-tags">
-          <span class="tag">Java</span>
-          <span class="tag">Spring Boot</span>
-          <span class="tag">MongoDB</span>
-          <span class="tag">Full Stack</span>
+  <header class="site-header" id="top">
+    <div class="nav-inner">
+      <a href="#top" class="wordmark">Anindit Bordoloi</a>
+      <nav class="main-nav">
+        <a href="#projects">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <a href="resume.html">Résumé</a>
+      </nav>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-toggle" aria-label="Switch to dark mode">🌙</button>
+        <a href="#contact" class="btn btn-primary btn-sm">Get in touch</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section-animate">
+      <div class="hero-inner">
+        <div class="badge"><span class="badge-dot"></span> Open to opportunities</div>
+        <h1>Software engineer building reliable, well-tested backend systems.</h1>
+        <p class="hero-bio">
+          I work across Java, Spring Boot, and MongoDB — four years at Capgemini building microservices,
+          messaging pipelines, and cloud migrations for insurance platforms, and now finishing an MS in
+          Computer Science at Texas State University.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">View my work</a>
+          <a href="#contact" class="btn btn-secondary">Get in touch</a>
         </div>
       </div>
-    </header>
+    </section>
 
-    <section class="section-animate">
-      <h2>🚀 Projects</h2>
-      <div id="projects" class="cards-grid">
+    <section class="stats-strip section-animate">
+      <div class="stat">
+        <div class="stat-number" id="stat-years">–</div>
+        <div class="stat-label">Years experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="stat-projects">–</div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="stat-tech">–</div>
+        <div class="stat-label">Technologies</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number" id="stat-degrees">–</div>
+        <div class="stat-label">Degrees</div>
+      </div>
+    </section>
+
+    <section class="section-block section-animate">
+      <div class="section-head">
+        <div class="section-label">Selected work</div>
+        <h2>Recent projects</h2>
+      </div>
+      <div id="projects" class="cards-grid projects-grid">
         <div class="loading"></div>
       </div>
     </section>
 
-    <section class="section-animate">
-      <h2>💼 Experience</h2>
-      <div id="experience" class="cards-grid">
+    <section class="section-block alt-bg section-animate">
+      <div class="section-head">
+        <div class="section-label">What I've done</div>
+        <h2>Experience</h2>
+      </div>
+      <div id="experience" class="cards-grid experience-grid">
         <div class="loading"></div>
       </div>
     </section>
 
-    <section class="section-animate">
-      <h2>🎓 Education</h2>
-      <div id="education" class="cards-grid">
-        <div class="loading"></div>
+    <section class="section-block section-animate">
+      <div class="section-head">
+        <div class="section-label">Toolbox</div>
+        <h2>Skills</h2>
       </div>
-    </section>
-
-    <section class="section-animate">
-      <h2>⚡ Skills</h2>
       <div id="skills" class="skills-container">
         <div class="loading"></div>
       </div>
     </section>
 
-    <section class="section-animate">
-      <div class="contact-section">
-        <h2 id="contact">📬 Contact</h2>
-        <p class="contact-description">Let's connect and build something amazing together!</p>
-        <p class="contact-email">📧 aninditbordoloi.mail011@gmail.com</p>
-        <div class="contact-links">
-          <a href="https://linkedin.com/in/anindit-bordoloi-452971109" class="contact-link">
-            💼 LinkedIn
-          </a>
-          <a href="https://github.com/AninditB" class="contact-link">
-            🔗 GitHub
-          </a>
-        </div>
+    <section class="section-block alt-bg section-animate">
+      <div class="section-head">
+        <div class="section-label">Background</div>
+        <h2>Education</h2>
+      </div>
+      <div id="education" class="cards-grid education-grid">
+        <div class="loading"></div>
       </div>
     </section>
-  </div>
+  </main>
+
+  <footer class="cta-band section-animate" id="contact">
+    <div class="cta-inner">
+      <h2>Let's work together</h2>
+      <p>Open to new opportunities — reach out any time, I usually reply within a day.</p>
+      <a href="mailto:aninditbordoloi.mail011@gmail.com" class="email-pill">aninditbordoloi.mail011@gmail.com</a>
+      <div class="cta-links">
+        <a href="https://linkedin.com/in/anindit-bordoloi-452971109" class="cta-link">LinkedIn</a>
+        <a href="https://github.com/AninditB" class="cta-link">GitHub</a>
+      </div>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 </body>

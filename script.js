@@ -11,11 +11,9 @@ async function fetchData(file) {
 
 function renderList(containerId, items, formatter) {
   const container = document.getElementById(containerId);
-  
-  // Add loading state
+
   container.innerHTML = '<div class="loading"></div>';
-  
-  // Simulate loading delay for smooth transition
+
   setTimeout(() => {
     container.innerHTML = items.map((item, index) => {
       const element = formatter(item, index);
@@ -33,98 +31,67 @@ function animateOnScroll() {
         entry.target.style.transform = 'translateY(0)';
       }
     });
-  }, { 
+  }, {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
   });
-  
+
   elements.forEach(el => observer.observe(el));
 }
 
 // Enhanced formatters with expandable content and modal buttons
 const formatters = {
   projects: (item, index) => `
-    <div class="card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
-      <div class="card-header">
-        <strong>🎯 ${item.title}</strong>
-        <div class="card-actions">
-          <button class="modal-btn" onclick="event.stopPropagation(); openModal('projects', ${index})" title="View Details" aria-label="View project details">
-            👁️
+    <div class="card project-card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
+      <div class="project-thumb thumb-${(index % 3) + 1}">
+        <span class="thumb-index">0${index + 1}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-header">
+          <strong>${item.title}</strong>
+          <button class="modal-btn" onclick="event.stopPropagation(); openModal('projects', ${index})" title="View details" aria-label="View project details">
+            &rarr;
           </button>
-         
         </div>
-      </div>
-      <div class="card-preview" style="margin: 0.5rem 0; color: var(--text-secondary);">
-        ${item.description ? item.description.substring(0, 100) + '...' : 'Click to see details'}
-      </div>
-      <div class="card-details" style="display: none;">
-        <div style="margin: 0.5rem 0; color: var(--text-secondary); line-height: 1.6;">
+        <div class="card-preview">
+          ${item.description ? item.description.substring(0, 110) + '…' : 'Click to see details'}
+        </div>
+        <div class="card-details" style="display: none;">
           ${item.description}
         </div>
-        <em>${Array.isArray(item.tech) ? item.tech.join(' • ') : item.tech}</em>
-        ${item.link ? `<div style="margin-top: 1rem;"><a href="${item.link}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: none;">🔗 View Project</a></div>` : ''}
+        <div class="tag-row">
+          ${Array.isArray(item.tech) ? item.tech.slice(0, 3).map(t => `<span class="tag-pill">${t}</span>`).join('') : ''}
+        </div>
       </div>
     </div>
   `,
-  
+
   experience: (item, index) => `
-    <div class="card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
+    <div class="card experience-card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
       <div class="card-header">
-        <strong>💼 ${item.role}</strong>
-        <div class="card-actions">
-          <button class="modal-btn" onclick="event.stopPropagation(); openModal('experience', ${index})" title="View Details" aria-label="View experience details">
-            👁️
-          </button>
-         
-        </div>
+        <strong>${item.role}</strong>
+        <button class="modal-btn" onclick="event.stopPropagation(); openModal('experience', ${index})" title="View details" aria-label="View experience details">
+          &rarr;
+        </button>
       </div>
       <div class="card-meta">
-        <div style="color: var(--accent); font-weight: 500;">
-          ${item.company} ${item.location ? '• ' + item.location : ''}
-        </div>
-        <div style="color: var(--text-secondary); font-size: 0.9rem;">
-          ${item.duration}
-        </div>
+        ${item.company}${item.location ? ' · ' + item.location : ''} · ${item.duration}
       </div>
-      <div class="card-details" style="display: none; margin-top: 1rem;">
-        ${item.techStack ? `
-          <div style="margin-bottom: 1rem;">
-            <strong style="color: var(--accent);">Tech Stack:</strong>
-            <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
-              ${item.techStack}
-            </div>
-          </div>
-        ` : ''}
-        <div style="color: var(--text-secondary); line-height: 1.6;">
-          ${Array.isArray(item.details) ? 
-            '<ul style="margin: 0; padding-left: 1rem;">' + 
-            item.details.map(detail => `<li style="margin-bottom: 0.5rem;">${detail}</li>`).join('') + 
-            '</ul>' 
-            : item.details}
-        </div>
+      <div class="card-preview">
+        ${Array.isArray(item.details) && item.details[0] ? item.details[0].substring(0, 110) + '…' : ''}
+      </div>
+      <div class="card-details" style="display: none;">
+        ${Array.isArray(item.details) ?
+          '<ul>' + item.details.map(detail => `<li>${detail}</li>`).join('') + '</ul>'
+          : item.details}
       </div>
     </div>
   `,
-  
-  education: (item, index) => `
-    <div class="card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
-      <div class="card-header">
-        <strong>🎓 ${item.degree}</strong>
-        <div class="card-actions">
-          <button class="modal-btn" onclick="event.stopPropagation(); openModal('education', ${index})" title="View Details" aria-label="View education details">
-            👁️
-          </button>
-           
-        </div>
-      </div>
-      <div style="color: var(--accent); font-weight: 500; margin: 0.5rem 0;">
-        ${item.institution} • ${item.year}
-      </div>
-      <div class="card-details" style="display: none; margin-top: 1rem;">
-        ${item.details ? `<div style="color: var(--text-secondary); line-height: 1.6;">${item.details}</div>` : ''}
-        ${item.gpa ? `<div style="color: var(--text-secondary); margin-top: 0.5rem;"><strong>GPA:</strong> ${item.gpa}</div>` : ''}
-        ${item.coursework ? `<div style="color: var(--text-secondary); margin-top: 0.5rem;"><strong>Relevant Coursework:</strong> ${item.coursework}</div>` : ''}
-      </div>
+
+  education: (item) => `
+    <div class="card education-card">
+      <strong>${item.degree}</strong>
+      <div class="card-meta">${item.institution} · ${item.year}</div>
     </div>
   `
 };
@@ -143,13 +110,11 @@ function toggleCard(card) {
   const isExpanded = details.style.display !== 'none';
 
   if (isExpanded) {
-    // Collapse
     details.style.display = 'none';
     if (preview) preview.style.display = 'block';
     card.classList.remove('expanded');
     card.setAttribute('aria-expanded', 'false');
   } else {
-    // Expand
     details.style.display = 'block';
     if (preview) preview.style.display = 'none';
     card.classList.add('expanded');
@@ -157,7 +122,6 @@ function toggleCard(card) {
   }
 }
 
-// Allow cards to be toggled via keyboard (Enter/Space)
 function handleCardKeydown(event, card) {
   if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
     event.preventDefault();
@@ -201,23 +165,17 @@ function createModal() {
         <div class="modal-meta"></div>
         <div class="modal-body"></div>
         <div class="share-section">
-          <h4 style="color: var(--accent); margin-bottom: 1rem; text-align: center;">Share This</h4>
+          <h4 style="color: var(--text); margin-bottom: 1rem; text-align: center;">Share this</h4>
           <div class="share-buttons">
-            <button class="share-btn" onclick="shareOnLinkedIn()">
-              <span>📄</span> LinkedIn
-            </button>
-            <button class="share-btn" onclick="shareOnTwitter()">
-              <span>🐦</span> Twitter
-            </button>
-            <button class="share-btn copy-btn" onclick="copyToClipboard()">
-              <span>📋</span> Copy Link
-            </button>
+            <button class="share-btn" onclick="shareOnLinkedIn()">LinkedIn</button>
+            <button class="share-btn" onclick="shareOnTwitter()">Twitter</button>
+            <button class="share-btn" onclick="copyToClipboard()">Copy link</button>
           </div>
         </div>
       </div>
     </div>
   `;
-  
+
   document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
@@ -229,13 +187,12 @@ function openModal(type, index) {
   const title = modal.querySelector('.modal-title');
   const meta = modal.querySelector('.modal-meta');
   const body = modal.querySelector('.modal-body');
-  
+
   const data = portfolioData[type][index];
   if (!data) return;
-  
-  // Store current modal data for sharing
+
   window.currentModalData = { type, index, data };
-  
+
   switch (type) {
     case 'projects':
       title.textContent = data.title;
@@ -260,25 +217,14 @@ function openModal(type, index) {
         ` : ''}
         ${data.link ? `
           <div style="margin-top: 2rem; text-align: center;">
-            <a href="${data.link}" target="_blank" rel="noopener noreferrer" style="
-              display: inline-flex;
-              align-items: center;
-              gap: 0.5rem;
-              color: var(--accent);
-              text-decoration: none;
-              padding: 1rem 2rem;
-              border: 2px solid var(--accent);
-              border-radius: 2rem;
-              transition: all 0.3s ease;
-              font-weight: 500;
-            ">
-              🔗 View Live Project
+            <a href="${data.link}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              View live project
             </a>
           </div>
         ` : ''}
       `;
       break;
-      
+
     case 'experience':
       title.textContent = data.role;
       meta.innerHTML = `
@@ -304,7 +250,7 @@ function openModal(type, index) {
         ` : ''}
       `;
       break;
-      
+
     case 'education':
       title.textContent = data.degree;
       meta.innerHTML = `
@@ -335,14 +281,12 @@ function openModal(type, index) {
       `;
       break;
   }
-  
-  // Show modal with animation
+
   requestAnimationFrame(() => {
     modal.classList.add('active');
     modal.querySelector('.modal-content').focus();
   });
 
-  // Prevent body scrolling
   document.body.style.overflow = 'hidden';
   document.addEventListener('keydown', trapFocus);
 }
@@ -369,7 +313,7 @@ function closeModal(event) {
 function shareOnLinkedIn() {
   const { data, type } = window.currentModalData || {};
   if (!data) return;
-  
+
   let shareText = '';
   switch (type) {
     case 'projects':
@@ -382,7 +326,7 @@ function shareOnLinkedIn() {
       shareText = `My education: ${data.degree} from ${data.institution}`;
       break;
   }
-  
+
   const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(shareText)}`;
   window.open(url, '_blank', 'width=600,height=400');
 }
@@ -390,20 +334,20 @@ function shareOnLinkedIn() {
 function shareOnTwitter() {
   const { data, type } = window.currentModalData || {};
   if (!data) return;
-  
+
   let shareText = '';
   switch (type) {
     case 'projects':
-      shareText = `Check out this project: ${data.title} 🚀`;
+      shareText = `Check out this project: ${data.title}`;
       break;
     case 'experience':
-      shareText = `My experience as ${data.role} at ${data.company} 💼`;
+      shareText = `My experience as ${data.role} at ${data.company}`;
       break;
     case 'education':
-      shareText = `My education: ${data.degree} from ${data.institution} 🎓`;
+      shareText = `My education: ${data.degree} from ${data.institution}`;
       break;
   }
-  
+
   const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(window.location.href)}`;
   window.open(url, '_blank', 'width=600,height=400');
 }
@@ -411,68 +355,81 @@ function shareOnTwitter() {
 function copyToClipboard() {
   const url = window.location.href;
   navigator.clipboard.writeText(url).then(() => {
-    const btn = document.querySelector('.copy-btn');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<span>✅</span> Copied!';
-    btn.style.background = '#10b981';
-    
-    setTimeout(() => {
-      btn.innerHTML = originalText;
-      btn.style.background = '';
-    }, 2000);
+    flashCopyButton();
   }).catch(() => {
-    // Fallback for older browsers
     const textArea = document.createElement('textarea');
     textArea.value = url;
     document.body.appendChild(textArea);
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
-    
-    const btn = document.querySelector('.copy-btn');
-    const originalText = btn.innerHTML;
-    btn.innerHTML = '<span>✅</span> Copied!';
-    btn.style.background = '#10b981';
-    
-    setTimeout(() => {
-      btn.innerHTML = originalText;
-      btn.style.background = '';
-    }, 2000);
+    flashCopyButton();
   });
 }
 
+function flashCopyButton() {
+  const btn = document.querySelector('.share-btn:last-child');
+  if (!btn) return;
+  const originalText = btn.textContent;
+  btn.textContent = 'Copied!';
+  setTimeout(() => {
+    btn.textContent = originalText;
+  }, 2000);
+}
+
+// Compute and render the stats strip from already-loaded data
+function renderStats() {
+  const years = document.getElementById('stat-years');
+  const projectsStat = document.getElementById('stat-projects');
+  const tech = document.getElementById('stat-tech');
+  const degrees = document.getElementById('stat-degrees');
+
+  if (portfolioData.experience.length) {
+    const yearRegex = /\b(19|20)\d{2}\b/g;
+    const allYears = portfolioData.experience
+      .flatMap(role => (role.duration || '').match(yearRegex) || [])
+      .map(Number);
+    if (allYears.length) {
+      const span = Math.max(...allYears) - Math.min(...allYears);
+      years.textContent = `${Math.max(span, 1)}+`;
+    }
+  }
+
+  if (projectsStat) projectsStat.textContent = `${portfolioData.projects.length}`;
+  if (tech) tech.textContent = `${portfolioData.skillsCount || 0}+`;
+  if (degrees) degrees.textContent = `${portfolioData.education.length}`;
+}
+
 // Load and render data with enhanced animations
-fetchData('projects.json').then(data => {
-  portfolioData.projects = data;
-  renderList('projects', data, formatters.projects);
-});
+Promise.all([
+  fetchData('projects.json'),
+  fetchData('experience.json'),
+  fetchData('education.json'),
+  fetchData('skills.json')
+]).then(([projects, experience, education, skills]) => {
+  portfolioData.projects = projects;
+  portfolioData.experience = experience;
+  portfolioData.education = education;
+  portfolioData.skillsCount = skills.length;
 
-fetchData('experience.json').then(data => {
-  portfolioData.experience = data;
-  renderList('experience', data, formatters.experience);
-});
+  renderList('projects', projects, formatters.projects);
+  renderList('experience', experience, formatters.experience);
+  renderList('education', education, formatters.education);
+  renderStats();
 
-fetchData('education.json').then(data => {
-  portfolioData.education = data;
-  renderList('education', data, formatters.education);
-});
-
-fetchData('skills.json').then(data => {
   const container = document.getElementById('skills');
   container.innerHTML = '<div class="loading"></div>';
-  
   setTimeout(() => {
-    container.innerHTML = data.map((skill, index) => 
+    container.innerHTML = skills.map((skill, index) =>
       `<span class="skill" style="animation: fadeInUp 0.6s ease-out ${index * 0.05}s both;">${skill}</span>`
     ).join('');
   }, 300);
 });
 
-// Initialize scroll animations when DOM is loaded
+// Initialize scroll animations and interactions
 document.addEventListener('DOMContentLoaded', () => {
   animateOnScroll();
-  
-  // Add smooth scrolling for internal links
+
   document.addEventListener('click', (e) => {
     if (e.target.tagName === 'A' && e.target.getAttribute('href')?.startsWith('#')) {
       e.preventDefault();
@@ -482,41 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-  
-  // Add subtle parallax effect
-  let ticking = false;
-  function updateParallax() {
-    const scrolled = window.pageYOffset;
-    const rate = scrolled * -0.5;
-    document.body.style.backgroundPositionY = `${rate}px`;
-    ticking = false;
-  }
-  
-  function requestTick() {
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
-    }
-  }
-  
-  window.addEventListener('scroll', requestTick);
-  
-  // Add card hover sound effect (optional)
-  document.addEventListener('mouseenter', (e) => {
-    if (e.target.classList.contains('card') || e.target.classList.contains('skill')) {
-      e.target.style.transform = e.target.classList.contains('card') 
-        ? 'translateY(-10px) scale(1.02)' 
-        : 'translateY(-2px) scale(1.05)';
-    }
-  }, true);
-  
-  document.addEventListener('mouseleave', (e) => {
-    if (e.target.classList.contains('card') || e.target.classList.contains('skill')) {
-      e.target.style.transform = '';
-    }
-  }, true);
-  
-  // Close modal on Escape key
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeModal();
@@ -524,46 +447,22 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Add loading states and error handling
-window.addEventListener('load', () => {
-  // Remove any lingering loading indicators after page fully loads
-  setTimeout(() => {
-    const loadingElements = document.querySelectorAll('.loading');
-    loadingElements.forEach(el => {
-      if (el.parentElement && el.parentElement.children.length === 1) {
-        el.style.opacity = '0';
-        setTimeout(() => el.remove(), 300);
-      }
-    });
-  }, 2000);
-});
-
-// Performance optimization: throttle scroll events
-function throttle(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
-
+// Theme toggle — default is light, .dark-mode is the alternate
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('theme-toggle');
-  const isLight = localStorage.getItem('theme') === 'light';
+  const isDark = localStorage.getItem('theme') === 'dark';
 
-  if (isLight) {
-    document.body.classList.add('light-mode');
-    toggle.textContent = '🌙 Switch to Dark Mode';
+  if (isDark) {
+    document.body.classList.add('dark-mode');
+    toggle.textContent = '🌞';
+    toggle.setAttribute('aria-label', 'Switch to light mode');
   }
 
   toggle.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-    const isLightNow = document.body.classList.contains('light-mode');
-    toggle.textContent = isLightNow ? '🌙 Switch to Dark Mode' : '🌞 Switch to Light Mode';
-    localStorage.setItem('theme', isLightNow ? 'light' : 'dark');
+    document.body.classList.toggle('dark-mode');
+    const isDarkNow = document.body.classList.contains('dark-mode');
+    toggle.textContent = isDarkNow ? '🌞' : '🌙';
+    toggle.setAttribute('aria-label', isDarkNow ? 'Switch to light mode' : 'Switch to dark mode');
+    localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
   });
 });
