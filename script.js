@@ -406,7 +406,9 @@ Promise.all([
   fetchData('experience.json'),
   fetchData('education.json'),
   fetchData('skills.json')
-]).then(([projects, experience, education, skills]) => {
+]).then(([projects, experience, education, skillGroups]) => {
+  const skills = skillGroups.flatMap(group => group.skills);
+
   portfolioData.projects = projects;
   portfolioData.experience = experience;
   portfolioData.education = education;

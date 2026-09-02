@@ -762,6 +762,12 @@ body.dark-mode .thumb-index {
 
 .resume-title {
   color: var(--text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.resume-location {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
   margin-bottom: 1.5rem;
 }
 
@@ -854,6 +860,39 @@ body.dark-mode .thumb-index {
   break-inside: avoid;
 }
 
+.resume-skills-groups {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.resume-skill-group-label {
+  color: var(--accent);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+.resume-skill-group .resume-skills-list {
+  columns: 1;
+}
+
+.resume-cert-list {
+  list-style: none;
+}
+
+.resume-cert-list li {
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.resume-cert-list li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
 @media (max-width: 768px) {
   .resume-layout {
     grid-template-columns: 1fr;
@@ -872,6 +911,11 @@ body.dark-mode .thumb-index {
 
   .resume-skills-list {
     columns: 1;
+  }
+
+  .resume-skills-groups {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 

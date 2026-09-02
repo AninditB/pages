@@ -1,1 +1,22 @@
-["Java", "Spring Boot", "React", "GraphQL", "MongoDB", "Docker", "AWS", "RabbitMQ"]
+[
+  {
+    "category": "GenAI & NLP",
+    "skills": ["LLM APIs (OpenAI, Anthropic Claude)", "Prompt Engineering", "RAG", "Vector Search (pgvector, Pinecone)", "LangChain", "Embeddings & Evaluation"]
+  },
+  {
+    "category": "Backend",
+    "skills": ["Java", "Spring Boot", "GraphQL", "Python", "REST", "MongoDB"]
+  },
+  {
+    "category": "Cloud & DevOps",
+    "skills": ["AWS", "Docker", "Kubernetes", "PCF", "Jenkins", "Terraform"]
+  },
+  {
+    "category": "Messaging",
+    "skills": ["RabbitMQ", "IBM MQ"]
+  },
+  {
+    "category": "Testing",
+    "skills": ["JUnit", "Mockito"]
+  }
+]

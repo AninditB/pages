@@ -45,19 +45,33 @@ function renderEducation(items) {
   `).join('');
 }
 
-function renderSkills(items) {
+function renderSkills(groups) {
   const container = document.getElementById('resume-skills');
-  container.innerHTML = items.map(skill => `<li>${skill}</li>`).join('');
+  container.innerHTML = groups.map(group => `
+    <div class="resume-skill-group">
+      <div class="resume-skill-group-label">${group.category}</div>
+      <ul class="resume-skills-list">
+        ${group.skills.map(skill => `<li>${skill}</li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+}
+
+function renderCertifications(items) {
+  const container = document.getElementById('resume-certifications');
+  container.innerHTML = items.map(cert => `<li>${cert}</li>`).join('');
 }
 
 Promise.all([
   fetchData('experience.json'),
   fetchData('education.json'),
-  fetchData('skills.json')
-]).then(([experience, education, skills]) => {
+  fetchData('skills.json'),
+  fetchData('certifications.json')
+]).then(([experience, education, skills, certifications]) => {
   renderExperience(experience);
   renderEducation(education);
   renderSkills(skills);
+  renderCertifications(certifications);
 });
 
 // Theme toggle — shares the same localStorage key as the main page
