@@ -414,12 +414,12 @@ Promise.all([
   portfolioData.education = education;
   portfolioData.skillsCount = skills.length;
 
-  renderList('projects', projects, formatters.projects);
-  renderList('experience', experience, formatters.experience);
-  renderList('education', education, formatters.education);
+  renderList('projects-list', projects, formatters.projects);
+  renderList('experience-list', experience, formatters.experience);
+  renderList('education-list', education, formatters.education);
   renderStats();
 
-  const container = document.getElementById('skills');
+  const container = document.getElementById('skills-list');
   container.innerHTML = '<div class="loading"></div>';
   setTimeout(() => {
     container.innerHTML = skills.map((skill, index) =>
