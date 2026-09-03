@@ -11,6 +11,7 @@ A single-page portfolio site that renders project, experience, education, and sk
 - Share-to-LinkedIn, share-to-Twitter, and copy-link actions from each modal
 - Dark/light theme toggle with saved preference (`localStorage`)
 - Scroll-based section animations and a subtle parallax background
+- "Book a call" page (`schedule.html`) with an embedded Cal.com scheduler
 
 ## Tech stack
 
@@ -19,12 +20,18 @@ Plain HTML, CSS, and JavaScript — no framework, no build step, no dependencies
 ## Project structure
 
 ```
-index.html    Page markup and section containers
-style.css     Styling, theme variables, responsive layout
-script.js     Data fetching, card/modal rendering, theme toggle
-data/         projects.json, experience.json, education.json, skills.json
-FLOWCHART.md  Mermaid diagrams documenting the site's rendering and interaction flow
+index.html      Page markup and section containers
+resume.html     Résumé page markup
+resume.js       Résumé data rendering, theme toggle, print
+schedule.html   "Book a call" page markup
+schedule.js     Cal.com embed setup, theme toggle
+style.css       Styling, theme variables, responsive layout
+script.js       Data fetching, card/modal rendering, theme toggle
+data/           projects.json, experience.json, education.json, skills.json
+FLOWCHART.md    Mermaid diagrams documenting the site's rendering and interaction flow
 ```
+
+`schedule.html` needs a real Cal.com event link set in `schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.
 
 ## Local development
 

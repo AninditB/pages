@@ -18,10 +18,13 @@
 - Added `rel="noopener noreferrer"` to the external "View Project" links.
 - Removed the unused, empty `script/main.js`.
 - Added a deployed site link and setup/structure/maintenance notes to `README.md`.
+- Gave each portfolio section wrapper its own `id` (`projects`/`experience`/`skills`/`education`) for nav anchors, and renamed the inner content containers to a `-list` suffix to remove the id collision.
+- Added `schedule.html`/`schedule.js` — a "Book a call" page with a Cal.com inline embed, linked from the nav on `index.html` and `resume.html`.
+- Manually verified the site at desktop and mobile (375px/768px) widths across `index.html`, `resume.html`, and `schedule.html`; no layout breakage found.
 
 ## To Do
 
-- Manually verify the site in desktop and mobile browser sizes (existing `@media (max-width: 768px)` breakpoint has not been re-tested since the card/modal markup changes above).
+- Set `CAL_LINK` in `schedule.js` to a real Cal.com event link (currently a placeholder — the page shows a "not set up yet" message until it's configured).
 
 ## Notes
 
@@ -29,3 +32,4 @@
 - Main script: `script.js`
 - Main stylesheet: `style.css`
 - Data source folder: `data/`
+- Scheduling page: `schedule.html` / `schedule.js`

@@ -736,6 +736,14 @@ body.dark-mode .thumb-index {
   .share-btn {
     justify-content: center;
   }
+
+  .schedule-layout {
+    padding-top: 2.5rem;
+  }
+
+  .schedule-embed {
+    min-height: 500px;
+  }
 }
 
 /* Résumé page */
@@ -917,6 +925,51 @@ body.dark-mode .thumb-index {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+}
+
+/* Schedule page */
+.schedule-layout {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 5rem;
+}
+
+.schedule-intro {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.schedule-intro h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0.5rem 0 1rem;
+}
+
+.schedule-bio {
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.schedule-embed {
+  min-height: 600px;
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.schedule-placeholder {
+  padding: 3rem 2rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.schedule-placeholder code {
+  background: var(--bg-alt);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.3rem;
 }
 
 @media print {
