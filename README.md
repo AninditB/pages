@@ -29,6 +29,7 @@ style.css       Styling, theme variables, responsive layout
 script.js       Data fetching, card/modal rendering, theme toggle
 data/           projects.json, experience.json, education.json, skills.json
 FLOWCHART.md    Mermaid diagrams documenting the site's rendering and interaction flow
+DESIGN.md       Design system reference — color, type, spacing, component tokens
 ```
 
 `schedule.html` needs a real Cal.com event link set in `schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.

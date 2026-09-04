@@ -45,22 +45,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isDark) {
     document.body.classList.add('dark-mode');
-    toggle.textContent = '🌞';
-    toggle.setAttribute('aria-label', 'Switch to light mode');
+    toggle.checked = true;
   }
 
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDarkNow = document.body.classList.contains('dark-mode');
-    toggle.textContent = isDarkNow ? '🌞' : '🌙';
-    toggle.setAttribute('aria-label', isDarkNow ? 'Switch to light mode' : 'Switch to dark mode');
-    localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+  toggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode', toggle.checked);
+    localStorage.setItem('theme', toggle.checked ? 'dark' : 'light');
   });
 
   if (CAL_LINK) {
     loadCalEmbed(CAL_LINK);
   } else {
-    document.getElementById('cal-embed').innerHTML =
-      '<p class="schedule-placeholder">Scheduling isn\'t set up yet — add a Cal.com event link to <code>CAL_LINK</code> in schedule.js to enable booking here.</p>';
+    document.getElementById('cal-embed').innerHTML = `
+      <div class="schedule-placeholder">
+        <div class="schedule-placeholder-badge">Coming soon</div>
+        <h3>Scheduling isn't live yet</h3>
+        <p>Direct booking will be available here shortly. In the meantime, reach out by email below and I'll follow up to find a time.</p>
+      </div>`;
   }
+});
+
+// Mobile nav toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('mobile-nav');
+  if (!toggle || !panel) return;
+
+  function openMenu() {
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    panel.querySelector('a')?.focus();
+    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('click', onOutsideClick);
+  }
+  function closeMenu({ restoreFocus = true } = {}) {
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    document.removeEventListener('keydown', onKeydown);
+    document.removeEventListener('click', onOutsideClick);
+    if (restoreFocus) toggle.focus();
+  }
+  function onKeydown(e) {
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = panel.querySelectorAll('a[href]');
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+  function onOutsideClick(e) {
+    if (!panel.contains(e.target) && e.target !== toggle) closeMenu({ restoreFocus: false });
+  }
+
+  toggle.addEventListener('click', () => panel.hidden ? openMenu() : closeMenu());
+  panel.addEventListener('click', (e) => { if (e.target.tagName === 'A') closeMenu({ restoreFocus: false }); });
 });

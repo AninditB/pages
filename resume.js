@@ -2,17 +2,21 @@ async function fetchData(file) {
   try {
     const response = await fetch(`data/${file}`);
     if (!response.ok) throw new Error(`Failed to fetch ${file}`);
-    return await response.json();
+    return { ok: true, data: await response.json() };
   } catch (err) {
     console.error(err);
-    return [];
+    return { ok: false, data: [] };
   }
 }
 
 function renderExperience(items) {
   const container = document.getElementById('resume-experience');
+  if (!items.length) {
+    container.innerHTML = '<div class="empty-state">No experience to show yet.</div>';
+    return;
+  }
   container.innerHTML = items.map(item => `
-    <div class="resume-entry">
+    <div class="resume-entry card">
       <div class="resume-entry-meta">
         <strong>${item.role}</strong>
         <div>${item.company}</div>
@@ -32,8 +36,12 @@ function renderExperience(items) {
 
 function renderEducation(items) {
   const container = document.getElementById('resume-education');
+  if (!items.length) {
+    container.innerHTML = '<div class="empty-state">No education to show yet.</div>';
+    return;
+  }
   container.innerHTML = items.map(item => `
-    <div class="resume-entry">
+    <div class="resume-entry card">
       <div class="resume-entry-meta">
         <div>${item.institution}</div>
         <div>${item.year}</div>
@@ -47,8 +55,12 @@ function renderEducation(items) {
 
 function renderSkills(groups) {
   const container = document.getElementById('resume-skills');
+  if (!groups.length) {
+    container.innerHTML = '<div class="empty-state">No skills to show yet.</div>';
+    return;
+  }
   container.innerHTML = groups.map(group => `
-    <div class="resume-skill-group">
+    <div class="resume-skill-group card">
       <div class="resume-skill-group-label">${group.category}</div>
       <ul class="resume-skills-list">
         ${group.skills.map(skill => `<li>${skill}</li>`).join('')}
@@ -59,6 +71,10 @@ function renderSkills(groups) {
 
 function renderCertifications(items) {
   const container = document.getElementById('resume-certifications');
+  if (!items.length) {
+    container.innerHTML = '<li class="empty-state">No certifications to show yet.</li>';
+    return;
+  }
   container.innerHTML = items.map(cert => `<li>${cert}</li>`).join('');
 }
 
@@ -67,11 +83,25 @@ Promise.all([
   fetchData('education.json'),
   fetchData('skills.json'),
   fetchData('certifications.json')
-]).then(([experience, education, skills, certifications]) => {
-  renderExperience(experience);
-  renderEducation(education);
-  renderSkills(skills);
-  renderCertifications(certifications);
+]).then(([experienceRes, educationRes, skillsRes, certificationsRes]) => {
+  const sections = [
+    { id: 'resume-experience', result: experienceRes, render: renderExperience, label: 'experience' },
+    { id: 'resume-education', result: educationRes, render: renderEducation, label: 'education' },
+    { id: 'resume-skills', result: skillsRes, render: renderSkills, label: 'skills' },
+    { id: 'resume-certifications', result: certificationsRes, render: renderCertifications, label: 'certifications' }
+  ];
+
+  sections.forEach(({ id, result, render, label }) => {
+    if (!result.ok) {
+      const message = `Couldn't load ${label} right now.`;
+      const container = document.getElementById(id);
+      container.innerHTML = id === 'resume-certifications'
+        ? `<li class="error-state">${message}</li>`
+        : `<div class="error-state">${message}</div>`;
+      return;
+    }
+    render(result.data);
+  });
 });
 
 // Theme toggle — shares the same localStorage key as the main page
@@ -81,19 +111,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isDark) {
     document.body.classList.add('dark-mode');
-    toggle.textContent = '🌞';
-    toggle.setAttribute('aria-label', 'Switch to light mode');
+    toggle.checked = true;
   }
 
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDarkNow = document.body.classList.contains('dark-mode');
-    toggle.textContent = isDarkNow ? '🌞' : '🌙';
-    toggle.setAttribute('aria-label', isDarkNow ? 'Switch to light mode' : 'Switch to dark mode');
-    localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+  toggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode', toggle.checked);
+    localStorage.setItem('theme', toggle.checked ? 'dark' : 'light');
   });
 
   document.getElementById('print-btn').addEventListener('click', () => {
     window.print();
   });
+});
+
+// Mobile nav toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('mobile-nav');
+  if (!toggle || !panel) return;
+
+  function openMenu() {
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    panel.querySelector('a')?.focus();
+    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('click', onOutsideClick);
+  }
+  function closeMenu({ restoreFocus = true } = {}) {
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    document.removeEventListener('keydown', onKeydown);
+    document.removeEventListener('click', onOutsideClick);
+    if (restoreFocus) toggle.focus();
+  }
+  function onKeydown(e) {
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = panel.querySelectorAll('a[href]');
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+  function onOutsideClick(e) {
+    if (!panel.contains(e.target) && e.target !== toggle) closeMenu({ restoreFocus: false });
+  }
+
+  toggle.addEventListener('click', () => panel.hidden ? openMenu() : closeMenu());
+  panel.addEventListener('click', (e) => { if (e.target.tagName === 'A') closeMenu({ restoreFocus: false }); });
 });

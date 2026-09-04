@@ -2,19 +2,23 @@ async function fetchData(file) {
   try {
     const response = await fetch(`data/${file}`);
     if (!response.ok) throw new Error(`Failed to fetch ${file}`);
-    return await response.json();
+    return { ok: true, data: await response.json() };
   } catch (err) {
     console.error(err);
-    return [];
+    return { ok: false, data: [] };
   }
 }
 
-function renderList(containerId, items, formatter) {
+function renderList(containerId, items, formatter, emptyMessage) {
   const container = document.getElementById(containerId);
 
   container.innerHTML = '<div class="loading"></div>';
 
   setTimeout(() => {
+    if (!items.length) {
+      container.innerHTML = `<div class="empty-state">${emptyMessage || 'Nothing to show yet.'}</div>`;
+      return;
+    }
     container.innerHTML = items.map((item, index) => {
       const element = formatter(item, index);
       return `<div style="animation: fadeInUp 0.6s ease-out ${index * 0.1}s both;">${element}</div>`;
@@ -406,7 +410,11 @@ Promise.all([
   fetchData('experience.json'),
   fetchData('education.json'),
   fetchData('skills.json')
-]).then(([projects, experience, education, skillGroups]) => {
+]).then(([projectsRes, experienceRes, educationRes, skillsRes]) => {
+  const projects = projectsRes.data;
+  const experience = experienceRes.data;
+  const education = educationRes.data;
+  const skillGroups = skillsRes.data;
   const skills = skillGroups.flatMap(group => group.skills);
 
   portfolioData.projects = projects;
@@ -414,12 +422,35 @@ Promise.all([
   portfolioData.education = education;
   portfolioData.skillsCount = skills.length;
 
-  renderList('projects-list', projects, formatters.projects);
-  renderList('experience-list', experience, formatters.experience);
-  renderList('education-list', education, formatters.education);
+  if (!projectsRes.ok) {
+    document.getElementById('projects-list').innerHTML = '<div class="error-state">Couldn\'t load projects right now.</div>';
+  } else {
+    renderList('projects-list', projects, formatters.projects, 'No projects to show yet.');
+  }
+
+  if (!experienceRes.ok) {
+    document.getElementById('experience-list').innerHTML = '<div class="error-state">Couldn\'t load experience right now.</div>';
+  } else {
+    renderList('experience-list', experience, formatters.experience, 'No experience to show yet.');
+  }
+
+  if (!educationRes.ok) {
+    document.getElementById('education-list').innerHTML = '<div class="error-state">Couldn\'t load education right now.</div>';
+  } else {
+    renderList('education-list', education, formatters.education, 'No education to show yet.');
+  }
+
   renderStats();
 
   const container = document.getElementById('skills-list');
+  if (!skillsRes.ok) {
+    container.innerHTML = '<div class="error-state">Couldn\'t load skills right now.</div>';
+    return;
+  }
+  if (!skills.length) {
+    container.innerHTML = '<div class="empty-state">No skills to show yet.</div>';
+    return;
+  }
   container.innerHTML = '<div class="loading"></div>';
   setTimeout(() => {
     container.innerHTML = skills.map((skill, index) =>
@@ -456,15 +487,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (isDark) {
     document.body.classList.add('dark-mode');
-    toggle.textContent = '🌞';
-    toggle.setAttribute('aria-label', 'Switch to light mode');
+    toggle.checked = true;
   }
 
-  toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDarkNow = document.body.classList.contains('dark-mode');
-    toggle.textContent = isDarkNow ? '🌞' : '🌙';
-    toggle.setAttribute('aria-label', isDarkNow ? 'Switch to light mode' : 'Switch to dark mode');
-    localStorage.setItem('theme', isDarkNow ? 'dark' : 'light');
+  toggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode', toggle.checked);
+    localStorage.setItem('theme', toggle.checked ? 'dark' : 'light');
   });
+});
+
+// Mobile nav toggle
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.getElementById('nav-toggle');
+  const panel = document.getElementById('mobile-nav');
+  if (!toggle || !panel) return;
+
+  function openMenu() {
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Close menu');
+    panel.querySelector('a')?.focus();
+    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('click', onOutsideClick);
+  }
+  function closeMenu({ restoreFocus = true } = {}) {
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+    document.removeEventListener('keydown', onKeydown);
+    document.removeEventListener('click', onOutsideClick);
+    if (restoreFocus) toggle.focus();
+  }
+  function onKeydown(e) {
+    if (e.key === 'Escape') { closeMenu(); return; }
+    if (e.key !== 'Tab') return;
+    const focusable = panel.querySelectorAll('a[href]');
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+  function onOutsideClick(e) {
+    if (!panel.contains(e.target) && e.target !== toggle) closeMenu({ restoreFocus: false });
+  }
+
+  toggle.addEventListener('click', () => panel.hidden ? openMenu() : closeMenu());
+  panel.addEventListener('click', (e) => { if (e.target.tagName === 'A') closeMenu({ restoreFocus: false }); });
 });
