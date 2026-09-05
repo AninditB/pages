@@ -20,19 +20,31 @@ Plain HTML, CSS, and JavaScript — no framework, no build step, no dependencies
 ## Project structure
 
 ```
-index.html      Page markup and section containers
-resume.html     Résumé page markup
-resume.js       Résumé data rendering, theme toggle, print
-schedule.html   "Book a call" page markup
-schedule.js     Cal.com embed setup, theme toggle
-style.css       Styling, theme variables, responsive layout
-script.js       Data fetching, card/modal rendering, theme toggle
-data/           projects.json, experience.json, education.json, skills.json
-FLOWCHART.md    Mermaid diagrams documenting the site's rendering and interaction flow
-DESIGN.md       Design system reference — color, type, spacing, component tokens
+index.html          Page markup and section containers
+resume.html         Résumé page markup
+schedule.html       "Book a call" page markup
+
+css/
+  base.css          Reset, theme tokens, body/nav/button styles
+  theme-toggle.css  Sun/moon theme-switch component
+  layout.css        Homepage sections, cards, modal, shared responsive rules
+  resume.css        Résumé page layout
+  schedule.css      Schedule page layout
+  print.css         Résumé print styles
+
+js/
+  data.js           Shared fetchData() helper
+  theme.js          Shared dark/light theme toggle
+  mobile-nav.js     Shared mobile nav open/close logic
+  main.js           Homepage data fetching, card/modal rendering
+  resume.js         Résumé data rendering, print button
+  schedule.js       Cal.com embed setup
+
+data/               projects.json, experience.json, education.json, skills.json, certifications.json
+docs/               DESIGN.md (design system reference), FLOWCHART.md (site flow diagrams), progress.md (changelog)
 ```
 
-`schedule.html` needs a real Cal.com event link set in `schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.
+`schedule.html` needs a real Cal.com event link set in `js/schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.
 
 ## Local development
 

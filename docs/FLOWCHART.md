@@ -2,9 +2,9 @@
 
 ```mermaid
 flowchart TD
-    A[User opens index.html] --> B[Browser loads style.css and script.js]
+    A[User opens index.html] --> B[Browser loads css/ stylesheets and js/ scripts]
     B --> C[Initial page sections show loading indicators]
-    C --> D[script.js requests JSON data]
+    C --> D[js/main.js requests JSON data]
 
     D --> E[data/projects.json]
     D --> F[data/experience.json]

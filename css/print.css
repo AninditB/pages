@@ -1,0 +1,35 @@
+@media print {
+  .site-header,
+  .cta-band {
+    display: none;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .resume-layout {
+    grid-template-columns: 220px 1fr;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .resume-sidebar {
+    position: static;
+  }
+
+  .card,
+  .resume-entry,
+  .resume-sidebar,
+  .resume-skill-group {
+    box-shadow: none;
+    border-radius: 0;
+    border: 1px solid #000;
+    background: #ffffff;
+  }
+
+  a {
+    color: inherit;
+  }
+}
