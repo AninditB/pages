@@ -134,6 +134,24 @@
   outline-offset: 3px;
 }
 
+/* Homepage cards — neumorphic (soft-UI) treatment, distinct from the flat .card base
+   used elsewhere (e.g. the résumé), since it needs a background matching the page
+   behind it rather than the .card default surface color. */
+.project-card,
+.experience-card,
+.education-card {
+  background: var(--bg);
+  border: none;
+  border-radius: 1.75rem;
+  box-shadow: 20px 20px 60px var(--neu-shadow-dark), -20px -20px 60px var(--neu-shadow-light);
+  transition: box-shadow 0.2s ease;
+}
+
+.project-card:hover,
+.experience-card:hover {
+  box-shadow: 26px 26px 70px var(--neu-shadow-dark), -26px -26px 70px var(--neu-shadow-light);
+}
+
 /* Project cards */
 .project-card {
   overflow: hidden;
@@ -248,8 +266,7 @@
 }
 
 .education-card:hover {
-  box-shadow: none;
-  border-color: var(--border);
+  box-shadow: 20px 20px 60px var(--neu-shadow-dark), -20px -20px 60px var(--neu-shadow-light);
 }
 
 @keyframes fadeIn {

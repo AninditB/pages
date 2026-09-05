@@ -64,6 +64,9 @@
   --radius-md: 0.9rem;
   --radius-lg: 1rem;
   --radius-pill: 999px;
+
+  --neu-shadow-dark: #d1d5db;
+  --neu-shadow-light: #ffffff;
 }
 
 body.dark-mode {
@@ -86,6 +89,9 @@ body.dark-mode {
   --thumb-1-start: #2a3550; --thumb-1-end: #202a42;
   --thumb-2-start: #263524; --thumb-2-end: #1e2b1e;
   --thumb-3-start: #2c2846; --thumb-3-end: #221f38;
+
+  --neu-shadow-dark: #090c14;
+  --neu-shadow-light: #1a2136;
 }
 
 body {
