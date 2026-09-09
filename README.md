@@ -65,4 +65,4 @@ Edit the relevant file under `data/` — no build step or restart required, just
 
 ## Deployment
 
-Deployed via GitHub Pages, served directly from the `main` branch, publish source set to `/frontend`.
+Deployed via GitHub Pages using a GitHub Actions workflow (`.github/workflows/deploy-pages.yml`, source set to "GitHub Actions" in repo Settings → Pages). On every push to `main`, the workflow copies `frontend/*` and `data/` into a flat build output (so `index.html` ends up at the site root) and rewrites `data.js`'s fetch path from `../data/` to `data/` to match, then deploys that output.

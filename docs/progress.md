@@ -22,7 +22,8 @@
 - Added `schedule.html`/`schedule.js` — a "Book a call" page with a Cal.com inline embed, linked from the nav on `index.html` and `resume.html`.
 - Manually verified the site at desktop and mobile (375px/768px) widths across `index.html`, `resume.html`, and `schedule.html`; no layout breakage found.
 - Reorganized the project: split the single `style.css` into `css/base.css`, `css/theme-toggle.css`, `css/layout.css`, `css/resume.css`, `css/schedule.css`, `css/print.css`; moved scripts into `js/` (renaming `script.js` to `js/main.js`) and extracted the duplicated `fetchData`, theme-toggle, and mobile-nav logic into shared `js/data.js`, `js/theme.js`, `js/mobile-nav.js` modules; moved `DESIGN.md`, `FLOWCHART.md`, and this file into `docs/`.
-- Reorganized the project again: moved `index.html`, `resume.html`, `schedule.html`, `css/`, and `js/` into a single `frontend/` folder, grouping all frontend code together and leaving `data/` as a top-level "extracted data" folder; updated `data.js`'s fetch path to `../data/` and set the GitHub Pages publish source to `/frontend`.
+- Reorganized the project again: moved `index.html`, `resume.html`, `schedule.html`, `css/`, and `js/` into a single `frontend/` folder, grouping all frontend code together and leaving `data/` as a top-level "extracted data" folder; updated `data.js`'s fetch path to `../data/`.
+- Discovered GitHub Pages' "Deploy from a branch" source only supports `/(root)` or `/docs` as the publish folder, not `/frontend`. Switched Pages to the "GitHub Actions" build type and added `.github/workflows/deploy-pages.yml`, which flattens `frontend/*` + `data/` into a build output and rewrites the `data.js` fetch path back to `data/` for the deployed site, so local dev (`../data/`) and production stay consistent with their own directory layouts.
 
 ## To Do
 
