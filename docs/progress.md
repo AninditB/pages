@@ -22,6 +22,7 @@
 - Added `schedule.html`/`schedule.js` — a "Book a call" page with a Cal.com inline embed, linked from the nav on `index.html` and `resume.html`.
 - Manually verified the site at desktop and mobile (375px/768px) widths across `index.html`, `resume.html`, and `schedule.html`; no layout breakage found.
 - Reorganized the project: split the single `style.css` into `css/base.css`, `css/theme-toggle.css`, `css/layout.css`, `css/resume.css`, `css/schedule.css`, `css/print.css`; moved scripts into `js/` (renaming `script.js` to `js/main.js`) and extracted the duplicated `fetchData`, theme-toggle, and mobile-nav logic into shared `js/data.js`, `js/theme.js`, `js/mobile-nav.js` modules; moved `DESIGN.md`, `FLOWCHART.md`, and this file into `docs/`.
+- Reorganized the project again: moved `index.html`, `resume.html`, `schedule.html`, `css/`, and `js/` into a single `frontend/` folder, grouping all frontend code together and leaving `data/` as a top-level "extracted data" folder; updated `data.js`'s fetch path to `../data/` and set the GitHub Pages publish source to `/frontend`.
 
 ## To Do
 
@@ -29,8 +30,8 @@
 
 ## Notes
 
-- Main entry point: `index.html`
-- Main script: `js/main.js`
-- Stylesheets: `css/`
+- Main entry point: `frontend/index.html`
+- Main script: `frontend/js/main.js`
+- Stylesheets: `frontend/css/`
 - Data source folder: `data/`
-- Scheduling page: `schedule.html` / `js/schedule.js`
+- Scheduling page: `frontend/schedule.html` / `frontend/js/schedule.js`

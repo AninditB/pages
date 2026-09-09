@@ -1,9 +1,9 @@
 # Design system
 
 Documents the visual language used across `index.html`, `resume.html`, and `schedule.html`. All
-tokens live at the top of `css/base.css` as CSS custom properties on `:root` (light) and
+tokens live at the top of `frontend/css/base.css` as CSS custom properties on `:root` (light) and
 `body.dark-mode` (dark); theme is toggled by adding/removing the `dark-mode` class on `<body>`
-and persisted to `localStorage['theme']` (shared toggle logic in `js/theme.js`).
+and persisted to `localStorage['theme']` (shared toggle logic in `frontend/js/theme.js`).
 
 ## Direction
 
@@ -171,7 +171,7 @@ Two-level system, used deliberately rather than everywhere:
 | Theme switch | `.theme-switch*` | checkbox-driven sun/moon toggle | own internal CSS vars, not wired into shared tokens — the one deliberately illustrative element on the page; `--toggle-size: 14px` (~79×35px) fits the header; native `<input type="checkbox">` under a `<label>` — keyboard-operable and exposes checked state to AT for free |
 | Mobile nav | `.nav-toggle` `.mobile-nav` | hamburger + absolutely-positioned dropdown at `≤768px` | replaces the old dead-end `.main-nav { display: none }`; full keyboard support (see [Accessibility](#accessibility)) |
 | Empty / error states | `.empty-state` `.error-state` | secondary-color vs. accent-color text | `fetchData()` returns tagged `{ ok, data }` so a failed fetch never looks identical to a genuinely-empty dataset |
-| Schedule placeholder | `.schedule-placeholder*` | "Coming soon" badge + message | shown when `CAL_LINK` is unset in `js/schedule.js`, so the page reads as intentional rather than broken |
+| Schedule placeholder | `.schedule-placeholder*` | "Coming soon" badge + message | shown when `CAL_LINK` is unset in `frontend/js/schedule.js`, so the page reads as intentional rather than broken |
 
 ## Résumé layout
 
@@ -254,4 +254,4 @@ flatten:
 | All interactive elements | `:focus-visible` — 2px accent outline (buttons, nav links, chips' parent controls, modal close/action buttons, mobile-nav trigger, résumé contact links) |
 | Mobile nav panel | Uses the `hidden` attribute (not a CSS class) — inert to assistive tech and removed from Tab order when closed |
 | Mobile nav panel (open) | Focus moves in on open; Tab/Shift+Tab trapped within its links; Escape closes and returns focus to the trigger; click-outside closes |
-| Modal | Same focus-trap + Escape-to-close pattern (`trapFocus` in `js/main.js`), predates this redesign |
+| Modal | Same focus-trap + Escape-to-close pattern (`trapFocus` in `frontend/js/main.js`), predates this redesign |

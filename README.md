@@ -20,35 +20,36 @@ Plain HTML, CSS, and JavaScript — no framework, no build step, no dependencies
 ## Project structure
 
 ```
-index.html          Page markup and section containers
-resume.html         Résumé page markup
-schedule.html       "Book a call" page markup
+frontend/
+  index.html          Page markup and section containers
+  resume.html         Résumé page markup
+  schedule.html       "Book a call" page markup
 
-css/
-  base.css          Reset, theme tokens, body/nav/button styles
-  theme-toggle.css  Sun/moon theme-switch component
-  layout.css        Homepage sections, cards, modal, shared responsive rules
-  resume.css        Résumé page layout
-  schedule.css      Schedule page layout
-  print.css         Résumé print styles
+  css/
+    base.css          Reset, theme tokens, body/nav/button styles
+    theme-toggle.css  Sun/moon theme-switch component
+    layout.css        Homepage sections, cards, modal, shared responsive rules
+    resume.css        Résumé page layout
+    schedule.css      Schedule page layout
+    print.css         Résumé print styles
 
-js/
-  data.js           Shared fetchData() helper
-  theme.js          Shared dark/light theme toggle
-  mobile-nav.js     Shared mobile nav open/close logic
-  main.js           Homepage data fetching, card/modal rendering
-  resume.js         Résumé data rendering, print button
-  schedule.js       Cal.com embed setup
+  js/
+    data.js           Shared fetchData() helper (fetches from ../data/)
+    theme.js          Shared dark/light theme toggle
+    mobile-nav.js     Shared mobile nav open/close logic
+    main.js           Homepage data fetching, card/modal rendering
+    resume.js         Résumé data rendering, print button
+    schedule.js       Cal.com embed setup
 
 data/               projects.json, experience.json, education.json, skills.json, certifications.json
 docs/               DESIGN.md (design system reference), FLOWCHART.md (site flow diagrams), progress.md (changelog)
 ```
 
-`schedule.html` needs a real Cal.com event link set in `js/schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.
+`schedule.html` needs a real Cal.com event link set in `frontend/js/schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.
 
 ## Local development
 
-Because `script.js` loads content via `fetch()` against the files in `data/`, opening `index.html` directly (`file://`) won't work — browsers block `fetch` requests from the `file://` origin. Serve the folder instead:
+Because `data.js` loads content via `fetch()` against the files in `data/`, opening `index.html` directly (`file://`) won't work — browsers block `fetch` requests from the `file://` origin. Serve the repo root (not the `frontend/` folder, so the `../data/` fetch resolves) instead:
 
 ```bash
 python -m http.server 8000
@@ -56,7 +57,7 @@ python -m http.server 8000
 npx serve .
 ```
 
-Then open `http://localhost:8000` (or the port your server prints).
+Then open `http://localhost:8000/frontend/` (or the port your server prints).
 
 ## Updating content
 
@@ -64,4 +65,4 @@ Edit the relevant file under `data/` — no build step or restart required, just
 
 ## Deployment
 
-Deployed via GitHub Pages, served directly from the `main` branch.
+Deployed via GitHub Pages, served directly from the `main` branch, publish source set to `/frontend`.
