@@ -1,21 +1,9 @@
+/* Page structure for the homepage: hero, stats, sections, homepage cards and the CTA band.
+   Shared components (buttons, cards, modal, lists, states) live in components.css. */
+
 /* Hero */
 .hero {
   padding: var(--space-10) 0 var(--space-9);
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-soft);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-pill);
-  margin-bottom: var(--space-5);
 }
 
 .badge-dot {
@@ -87,72 +75,23 @@
   background: var(--bg-alt);
 }
 
-.section-head {
-  margin-bottom: var(--space-7);
-}
-
-.section-label {
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: var(--label-gap);
-}
-
 .section-block h2 {
   font-size: var(--text-2xl);
   font-weight: var(--font-semibold);
   letter-spacing: -0.01em;
 }
 
-/* Cards */
+.section-head {
+  margin-bottom: var(--space-7);
+}
+
+/* Homepage card grid and card contents */
 .cards-grid {
   display: grid;
   gap: var(--space-5);
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  border-color: var(--text-secondary);
-  box-shadow: 0 8px 20px var(--shadow-md);
-}
-
-.expandable-card {
-  cursor: pointer;
-}
-
-.expandable-card:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* Homepage cards — neumorphic (soft-UI) treatment, distinct from the flat .card base
-   used elsewhere (e.g. the résumé), since it needs a background matching the page
-   behind it rather than the .card default surface color. */
-.project-card,
-.experience-card,
-.education-card {
-  background: var(--bg);
-  border: none;
-  border-radius: var(--radius-neu);
-  box-shadow: var(--shadow-neu-rest);
-  transition: box-shadow 0.2s ease;
-}
-
-.project-card:hover,
-.experience-card:hover {
-  box-shadow: var(--shadow-neu-hover);
-}
-
-/* Project cards */
 .project-card {
   overflow: hidden;
 }
@@ -192,31 +131,6 @@
   font-weight: var(--font-semibold);
 }
 
-.modal-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: var(--icon-btn-size);
-  height: var(--icon-btn-size);
-  border-radius: var(--radius-pill);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-.modal-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.modal-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
 .card-preview {
   color: var(--text-secondary);
   font-size: var(--text-base);
@@ -237,12 +151,7 @@
 }
 
 .card-details ul {
-  padding-left: var(--list-indent);
   margin-top: var(--space-2);
-}
-
-.card-details li {
-  margin-bottom: var(--space-3);
 }
 
 .tag-row {
@@ -252,7 +161,7 @@
   margin-top: var(--space-4);
 }
 
-/* Experience & education cards */
+/* Experience and education cards */
 .experience-card,
 .education-card {
   padding: var(--space-5);
@@ -265,50 +174,9 @@
   margin-bottom: var(--space-2);
 }
 
+/* Education entries are not expandable, so they keep the resting shadow on hover */
 .education-card:hover {
   box-shadow: var(--shadow-neu-rest);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Staggered entrance; each element sets its own animation-delay */
-.fade-in-up {
-  animation: fadeInUp 0.6s ease-out both;
-}
-
-/* Skills / chips (shared between .skill and .tag-pill) */
-.skills-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-}
-
-.skill,
-.tag-pill {
-  display: inline-block;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-xs);
-  font-weight: var(--font-medium);
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-.skill:hover,
-.tag-pill:hover {
-  background: var(--accent-soft);
-  border-color: var(--accent);
-  color: var(--accent);
 }
 
 /* CTA band */
@@ -345,6 +213,7 @@
   background: rgba(var(--cta-text-rgb), 0.16);
 }
 
+/* The CTA band is dark in both themes, so its focus ring is cream rather than accent */
 .email-pill:focus-visible,
 .cta-link:focus-visible {
   outline: 2px solid var(--cta-text);
@@ -367,225 +236,6 @@
   color: var(--cta-text);
 }
 
-/* Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--overlay-bg);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
-.modal-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.modal-content {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  max-width: 600px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
-  box-shadow: 0 20px 40px var(--shadow-lg);
-  transform: scale(0.96) translateY(20px);
-  transition: all 0.25s ease;
-}
-
-.modal-content:focus {
-  outline: none;
-}
-
-.modal-overlay.active .modal-content {
-  transform: scale(1) translateY(0);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-5);
-  padding-bottom: var(--space-4);
-  border-bottom: 1px solid var(--border);
-}
-
-.modal-title {
-  font-size: var(--text-lg);
-  font-weight: var(--font-semibold);
-  flex: 1;
-}
-
-.modal-close {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: var(--icon-btn-size);
-  height: var(--icon-btn-size);
-  border-radius: var(--radius-pill);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-lg);
-  cursor: pointer;
-  margin-left: var(--space-4);
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-
-.modal-close:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.modal-close:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.modal-meta {
-  margin-bottom: var(--space-5);
-}
-
-.modal-meta .company,
-.modal-meta .institution {
-  color: var(--accent);
-  font-weight: var(--font-medium);
-  font-size: var(--text-md);
-  margin-bottom: var(--space-2);
-}
-
-.modal-meta .duration,
-.modal-meta .year {
-  color: var(--text-secondary);
-  font-size: var(--text-base);
-}
-
-.modal-body {
-  color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
-}
-
-.modal-body h4 {
-  color: var(--text);
-  font-weight: var(--font-semibold);
-  margin: var(--space-5) 0 var(--space-3) 0;
-  font-size: var(--text-md);
-}
-
-.modal-body ul {
-  margin: var(--space-3) 0;
-  padding-left: var(--list-indent);
-}
-
-.modal-body li {
-  margin-bottom: var(--space-3);
-}
-
-.modal-cta {
-  margin-top: var(--space-6);
-  text-align: center;
-}
-
-.modal-gpa {
-  margin: var(--space-4) 0;
-}
-
-.modal-gpa strong {
-  color: var(--accent);
-}
-
-.share-title {
-  color: var(--text);
-  margin-bottom: var(--space-4);
-  text-align: center;
-}
-
-.modal-body .tech-stack {
-  background: var(--bg-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: var(--space-4);
-  margin: var(--space-4) 0;
-}
-
-.share-section {
-  margin-top: var(--space-6);
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--border);
-}
-
-.share-buttons {
-  display: flex;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.share-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-pill);
-  font-size: var(--text-sm);
-  font-weight: var(--font-medium);
-  cursor: pointer;
-  transition: border-color 0.2s ease, color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.share-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.share-btn:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* Loading / empty / error states */
-.loading {
-  display: inline-block;
-  width: 36px;
-  height: 36px;
-  border: 3px solid var(--border);
-  border-radius: 50%;
-  border-top-color: var(--accent);
-  animation: spin 1s ease-in-out infinite;
-  margin: var(--space-6) auto;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.empty-state,
-.error-state {
-  text-align: center;
-  color: var(--text-secondary);
-  padding: var(--space-8) var(--space-4);
-  font-size: var(--text-sm);
-}
-
-.error-state {
-  color: var(--accent);
-}
-
 /* Scroll reveal */
 .section-animate {
   opacity: 0;
@@ -597,6 +247,22 @@
 @media (max-width: 768px) {
   .main-nav {
     display: none;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 8px 20px var(--shadow-md);
+    padding: var(--space-4) var(--space-6);
+    z-index: 40;
   }
 
   /* Header has to fit wordmark, theme switch, menu toggle and CTA on one line */
@@ -621,22 +287,6 @@
   .nav-actions .btn {
     white-space: nowrap;
     padding: var(--space-2) var(--space-3);
-  }
-
-  .nav-toggle {
-    display: inline-flex;
-  }
-
-  .mobile-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    box-shadow: 0 8px 20px var(--shadow-md);
-    padding: var(--space-4) var(--space-6);
-    z-index: 40;
   }
 
   .stats-strip {

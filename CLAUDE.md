@@ -33,9 +33,9 @@ There is no test suite. Verify changes by loading the pages in the browser at de
 
 **Shared shell is generated, not hand-maintained.** The header, mobile nav, footer and theme `<head>` snippet live in `scripts/shell.template.html` and are copied into each page between `<!-- partial:NAME:start/end -->` markers by `scripts/sync-shell.mjs`. Edit the template, not the pages.
 
-**Theme is an `<html>` class.** `theme.js` toggles `.dark-mode` on `<html>` and stores the choice in `localStorage['theme']`. An inline script in each page's `<head>` applies it before paint. All colors come from CSS custom properties defined in `frontend/css/base.css` on `:root` and `html.dark-mode`. Use the tokens rather than hard-coding colors.
+**Theme is an `<html>` class.** `theme.js` toggles `.dark-mode` on `<html>` and stores the choice in `localStorage['theme']`. An inline script in each page's `<head>` applies it before paint. All colors come from CSS custom properties defined in `frontend/css/tokens.css` on `:root` and `html.dark-mode`. Use the tokens rather than hard-coding colors.
 
-**Stylesheet load order matters.** `base.css` (tokens and reset) → `theme-toggle.css` → `layout.css` (shared sections, cards, modal, responsive rules) → page CSS (`resume.css`, `schedule.css`, `print.css`). Page-specific CSS overrides `layout.css`.
+**Stylesheet layers, loaded in this order on every page:** `tokens.css` → `base.css` (reset, focus ring, header) → `components.css` (buttons, badges, cards, lists, chips, modal, states) → `theme-toggle.css` → `layout.css` (homepage structure, card specifics, CTA band, responsive rules) → page CSS (`resume.css`, `schedule.css`, `print.css`). Later layers override earlier ones, so keep the order. Reuse a component class (`.card`, `.surface`, `.card--neu`, `.badge`, or the icon-button group `.modal-btn` / `.modal-close` / `.nav-toggle`) instead of copying its rules.
 
 **Homepage interactions are built with string templates.** `main.js` builds card HTML from `formatters`, expands cards with `toggleCard`, and opens a focus-trapped modal with `openModal`/`closeModal`. Card markup uses inline `onclick` handlers that call these globals.
 

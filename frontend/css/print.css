@@ -22,9 +22,7 @@
   }
 
   .card,
-  .resume-entry,
-  .resume-sidebar,
-  .resume-skill-group {
+  .surface {
     box-shadow: none;
     border-radius: 0;
     border: 1px solid #000;

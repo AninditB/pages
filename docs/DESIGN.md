@@ -157,7 +157,7 @@ Two-level system, used deliberately rather than everywhere:
 | None | — | Buttons, nav, CTA band — flat by design |
 | Resting | border only | Cards at rest |
 | Hover | `0 8px 20px` `shadow-md` | Card hover |
-| Neumorphic | `--shadow-neu-rest` / `--shadow-neu-hover` (paired light and dark shadows) | Homepage project, experience and education cards |
+| Neumorphic | `--shadow-neu-rest` / `--shadow-neu-hover` (paired light and dark shadows), class `.card--neu` | Homepage project, experience and education cards |
 | Modal | `0 20px 40px` `shadow-lg` | Modal — highest elevation on the site |
 
 ## Components
@@ -166,7 +166,7 @@ Two-level system, used deliberately rather than everywhere:
 |---|---|---|---|
 | Buttons | `.btn` `.btn-primary` `.btn-secondary` `.btn-sm` | pill radius, subtle opacity/border hover | no lift; `:focus-visible` accent ring |
 | Chips | `.skill` `.tag-pill` | one shared ruleset, pill radius | accent-soft fill + accent border/text on hover |
-| Cards | `.card` `.project-card` `.experience-card` `.education-card` | `radius-md`, border-only at rest, hover elevation. Homepage project, experience and education cards use the neumorphic treatment (`--radius-neu`, `--shadow-neu-*`) instead | `.education-card` hover keeps the resting shadow — not expandable, avoids a false "clickable" signal |
+| Cards | `.card` `.surface` `.surface--flat` `.card--neu` | `.surface` / `.card`: `radius-md`, border-only at rest, hover elevation on `.card`. `.surface--flat` squares the corners (résumé, print). `.card--neu` is the homepage neumorphic treatment (`--radius-neu`, `--shadow-neu-*`) | `.education-card` hover keeps the resting shadow — not expandable, avoids a false "clickable" signal |
 | Résumé cards | `.resume-entry` `.resume-skill-group` `.resume-sidebar` | same card language as homepage | unifies the résumé's visual system with the rest of the site |
 | Modal | `.modal-overlay` `.modal-content` | `radius-lg`, highest elevation | focus-visible rings on close/action buttons |
 | Theme switch | `.theme-switch*` | checkbox-driven sun/moon toggle | the one deliberately illustrative element on the page; its sky and night colours are component-scoped, but the night background follows `--bg`; `--toggle-size: 14px` (~79×35px) on desktop, `10px` at `≤768px`; native `<input type="checkbox">` is visually hidden (not `display: none`) so it stays in the Tab order, with the focus ring on the whole switch |
