@@ -10,7 +10,7 @@ function renderList(containerId, items, formatter, emptyMessage) {
     }
     container.innerHTML = items.map((item, index) => {
       const element = formatter(item, index);
-      return `<div style="animation: fadeInUp 0.6s ease-out ${index * 0.1}s both;">${element}</div>`;
+      return `<div class="fade-in-up" style="animation-delay: ${index * 0.1}s;">${element}</div>`;
     }).join('');
   }, 300);
 }
@@ -116,6 +116,8 @@ function toggleCard(card) {
 }
 
 function handleCardKeydown(event, card) {
+  // Ignore keys pressed on nested controls (e.g. the modal button) so they keep their native behaviour
+  if (event.target !== card) return;
   if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
     event.preventDefault();
     toggleCard(card);
@@ -126,23 +128,7 @@ function handleCardKeydown(event, card) {
 let modalTriggerElement = null;
 
 function trapFocus(e) {
-  if (e.key !== 'Tab') return;
-  const content = document.querySelector('.modal-overlay .modal-content');
-  if (!content) return;
-  const focusable = content.querySelectorAll(
-    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-  );
-  if (!focusable.length) return;
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-
-  if (e.shiftKey && document.activeElement === first) {
-    e.preventDefault();
-    last.focus();
-  } else if (!e.shiftKey && document.activeElement === last) {
-    e.preventDefault();
-    first.focus();
-  }
+  trapTabKey(e, document.querySelector('.modal-overlay .modal-content'));
 }
 
 function createModal() {
@@ -158,7 +144,7 @@ function createModal() {
         <div class="modal-meta"></div>
         <div class="modal-body"></div>
         <div class="share-section">
-          <h4 style="color: var(--text); margin-bottom: 1rem; text-align: center;">Share this</h4>
+          <h4 class="share-title">Share this</h4>
           <div class="share-buttons">
             <button class="share-btn" onclick="shareOnLinkedIn()">LinkedIn</button>
             <button class="share-btn" onclick="shareOnTwitter()">Twitter</button>
@@ -209,7 +195,7 @@ function openModal(type, index) {
           <div>${data.challenges}</div>
         ` : ''}
         ${data.link ? `
-          <div style="margin-top: 2rem; text-align: center;">
+          <div class="modal-cta">
             <a href="${data.link}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
               View live project
             </a>
@@ -253,8 +239,8 @@ function openModal(type, index) {
       body.innerHTML = `
         ${data.details ? `<div class="education-details">${data.details}</div>` : ''}
         ${data.gpa ? `
-          <div style="margin: 1rem 0;">
-            <strong style="color: var(--accent);">GPA:</strong> ${data.gpa}
+          <div class="modal-gpa">
+            <strong>GPA:</strong> ${data.gpa}
           </div>
         ` : ''}
         ${data.coursework ? `
@@ -371,13 +357,13 @@ function flashCopyButton() {
 }
 
 // Compute and render the stats strip from already-loaded data
-function renderStats() {
+function renderStats(ok) {
   const years = document.getElementById('stat-years');
   const projectsStat = document.getElementById('stat-projects');
   const tech = document.getElementById('stat-tech');
   const degrees = document.getElementById('stat-degrees');
 
-  if (portfolioData.experience.length) {
+  if (ok.experience && portfolioData.experience.length) {
     const yearRegex = /\b(19|20)\d{2}\b/g;
     const allYears = portfolioData.experience
       .flatMap(role => (role.duration || '').match(yearRegex) || [])
@@ -388,9 +374,9 @@ function renderStats() {
     }
   }
 
-  if (projectsStat) projectsStat.textContent = `${portfolioData.projects.length}`;
-  if (tech) tech.textContent = `${portfolioData.skillsCount || 0}+`;
-  if (degrees) degrees.textContent = `${portfolioData.education.length}`;
+  if (projectsStat && ok.projects) projectsStat.textContent = `${portfolioData.projects.length}`;
+  if (tech && ok.skills) tech.textContent = `${portfolioData.skillsCount || 0}+`;
+  if (degrees && ok.education) degrees.textContent = `${portfolioData.education.length}`;
 }
 
 // Load and render data with enhanced animations
@@ -429,7 +415,12 @@ Promise.all([
     renderList('education-list', education, formatters.education, 'No education to show yet.');
   }
 
-  renderStats();
+  renderStats({
+    experience: experienceRes.ok,
+    projects: projectsRes.ok,
+    skills: skillsRes.ok,
+    education: educationRes.ok
+  });
 
   const container = document.getElementById('skills-list');
   if (!skillsRes.ok) {
@@ -443,7 +434,7 @@ Promise.all([
   container.innerHTML = '<div class="loading"></div>';
   setTimeout(() => {
     container.innerHTML = skills.map((skill, index) =>
-      `<span class="skill" style="animation: fadeInUp 0.6s ease-out ${index * 0.05}s both;">${skill}</span>`
+      `<span class="skill fade-in-up" style="animation-delay: ${index * 0.05}s;">${skill}</span>`
     ).join('');
   }, 300);
 });

@@ -1,4 +1,5 @@
-// Mobile nav toggle — shared across all pages
+// Mobile nav toggle — shared across all pages. Escape and the focus trap are bound only
+// while the menu is open.
 document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('nav-toggle');
   const panel = document.getElementById('mobile-nav');
@@ -22,11 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function onKeydown(e) {
     if (e.key === 'Escape') { closeMenu(); return; }
-    if (e.key !== 'Tab') return;
-    const focusable = panel.querySelectorAll('a[href]');
-    const first = focusable[0], last = focusable[focusable.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    trapTabKey(e, panel);
   }
   function onOutsideClick(e) {
     if (!panel.contains(e.target) && e.target !== toggle) closeMenu({ restoreFocus: false });

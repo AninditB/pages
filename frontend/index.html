@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anindit Bordoloi | Portfolio</title>
+  <!-- partial:head-theme:start -->
+  <script>
+    // Apply the saved theme before first paint so dark pages don't flash light.
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark-mode');
+      } catch (err) {}
+    })();
+  </script>
+<!-- partial:head-theme:end -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,10 +22,12 @@
   <link rel="stylesheet" href="css/layout.css" />
 </head>
 <body>
+  <!-- partial:header:start -->
+  <a href="#main" class="skip-link">Skip to content</a>
   <header class="site-header" id="top">
     <div class="nav-inner">
       <a href="#top" class="wordmark">Anindit Bordoloi</a>
-      <nav class="main-nav">
+      <nav class="main-nav" aria-label="Primary">
         <a href="#projects">Work</a>
         <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
@@ -73,8 +85,9 @@
       <a href="schedule.html">Book a call</a>
     </nav>
   </header>
+<!-- partial:header:end -->
 
-  <main>
+  <main id="main">
     <section class="hero section-animate">
       <div class="hero-inner">
         <div class="badge"><span class="badge-dot"></span> Open to opportunities</div>
@@ -152,7 +165,8 @@
     </section>
   </main>
 
-  <footer class="cta-band section-animate" id="contact">
+  <!-- partial:footer:start -->
+  <footer class="cta-band" id="contact">
     <div class="cta-inner">
       <h2>Let's work together</h2>
       <p>Open to new opportunities — reach out any time, I usually reply within a day.</p>
@@ -163,9 +177,11 @@
       </div>
     </div>
   </footer>
+<!-- partial:footer:end -->
 
   <script src="js/data.js"></script>
   <script src="js/theme.js"></script>
+  <script src="js/a11y.js"></script>
   <script src="js/mobile-nav.js"></script>
   <script src="js/main.js"></script>
 </body>

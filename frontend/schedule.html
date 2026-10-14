@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anindit Bordoloi | Book a Call</title>
+  <!-- partial:head-theme:start -->
+  <script>
+    // Apply the saved theme before first paint so dark pages don't flash light.
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark-mode');
+      } catch (err) {}
+    })();
+  </script>
+<!-- partial:head-theme:end -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,12 +23,18 @@
   <link rel="stylesheet" href="css/schedule.css" />
 </head>
 <body>
-  <header class="site-header">
+  <!-- partial:header:start -->
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header" id="top">
     <div class="nav-inner">
-      <a href="index.html" class="wordmark">Anindit Bordoloi</a>
-      <nav class="main-nav">
-        <a href="index.html">Portfolio</a>
+      <a href="index.html#top" class="wordmark">Anindit Bordoloi</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html#projects">Work</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#contact">Contact</a>
         <a href="resume.html">Résumé</a>
+        <a href="schedule.html">Book a call</a>
       </nav>
       <div class="nav-actions">
         <label class="theme-switch" for="theme-toggle" aria-label="Toggle dark mode">
@@ -58,17 +74,23 @@
           <span class="nav-toggle-bar"></span>
           <span class="nav-toggle-bar"></span>
         </button>
+        <a href="index.html#contact" class="btn btn-primary btn-sm">Get in touch</a>
       </div>
     </div>
     <nav id="mobile-nav" class="mobile-nav" hidden>
-      <a href="index.html">Portfolio</a>
+      <a href="index.html#projects">Work</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
       <a href="resume.html">Résumé</a>
+      <a href="schedule.html">Book a call</a>
     </nav>
   </header>
+<!-- partial:header:end -->
 
-  <main class="schedule-layout">
+  <main class="schedule-layout" id="main">
     <div class="schedule-intro">
-      <div class="section-label">Let's talk</div>
+      <p class="section-label">Let's talk</p>
       <h1>Book a call</h1>
       <p class="schedule-bio">
         Pick a time that works for you and I'll follow up with the details beforehand. Happy to talk about roles,
@@ -78,10 +100,11 @@
     <div id="cal-embed" class="schedule-embed"></div>
   </main>
 
+  <!-- partial:footer:start -->
   <footer class="cta-band" id="contact">
     <div class="cta-inner">
-      <h2>Prefer email?</h2>
-      <p>Reach out any time, I usually reply within a day.</p>
+      <h2>Let's work together</h2>
+      <p>Open to new opportunities — reach out any time, I usually reply within a day.</p>
       <a href="mailto:aninditbordoloi.mail011@gmail.com" class="email-pill">aninditbordoloi.mail011@gmail.com</a>
       <div class="cta-links">
         <a href="https://linkedin.com/in/anindit-bordoloi-452971109" class="cta-link">LinkedIn</a>
@@ -89,8 +112,10 @@
       </div>
     </div>
   </footer>
+<!-- partial:footer:end -->
 
   <script src="js/theme.js"></script>
+  <script src="js/a11y.js"></script>
   <script src="js/mobile-nav.js"></script>
   <script src="js/schedule.js"></script>
 </body>

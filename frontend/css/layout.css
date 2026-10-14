@@ -97,7 +97,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--label-gap);
 }
 
 .section-block h2 {
@@ -142,14 +142,14 @@
 .education-card {
   background: var(--bg);
   border: none;
-  border-radius: 1.75rem;
-  box-shadow: 20px 20px 60px var(--neu-shadow-dark), -20px -20px 60px var(--neu-shadow-light);
+  border-radius: var(--radius-neu);
+  box-shadow: var(--shadow-neu-rest);
   transition: box-shadow 0.2s ease;
 }
 
 .project-card:hover,
 .experience-card:hover {
-  box-shadow: 26px 26px 70px var(--neu-shadow-dark), -26px -26px 70px var(--neu-shadow-light);
+  box-shadow: var(--shadow-neu-hover);
 }
 
 /* Project cards */
@@ -196,8 +196,8 @@
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text);
-  width: 2rem;
-  height: 2rem;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
   border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
@@ -237,12 +237,12 @@
 }
 
 .card-details ul {
-  padding-left: 1.1rem;
+  padding-left: var(--list-indent);
   margin-top: var(--space-2);
 }
 
 .card-details li {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .tag-row {
@@ -266,7 +266,7 @@
 }
 
 .education-card:hover {
-  box-shadow: 20px 20px 60px var(--neu-shadow-dark), -20px -20px 60px var(--neu-shadow-light);
+  box-shadow: var(--shadow-neu-rest);
 }
 
 @keyframes fadeIn {
@@ -277,6 +277,11 @@
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered entrance; each element sets its own animation-delay */
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
 }
 
 /* Skills / chips (shared between .skill and .tag-pill) */
@@ -369,7 +374,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay-bg);
   backdrop-filter: blur(6px);
   z-index: 1000;
   display: flex;
@@ -427,8 +432,8 @@
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text);
-  width: 2rem;
-  height: 2rem;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
   border-radius: var(--radius-pill);
   display: flex;
   align-items: center;
@@ -436,11 +441,12 @@
   font-size: var(--text-lg);
   cursor: pointer;
   margin-left: var(--space-4);
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .modal-close:hover {
-  border-color: var(--text);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .modal-close:focus-visible {
@@ -480,11 +486,30 @@
 
 .modal-body ul {
   margin: var(--space-3) 0;
-  padding-left: 1.4rem;
+  padding-left: var(--list-indent);
 }
 
 .modal-body li {
   margin-bottom: var(--space-3);
+}
+
+.modal-cta {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.modal-gpa {
+  margin: var(--space-4) 0;
+}
+
+.modal-gpa strong {
+  color: var(--accent);
+}
+
+.share-title {
+  color: var(--text);
+  margin-bottom: var(--space-4);
+  text-align: center;
 }
 
 .modal-body .tech-stack {
@@ -572,6 +597,30 @@
 @media (max-width: 768px) {
   .main-nav {
     display: none;
+  }
+
+  /* Header has to fit wordmark, theme switch, menu toggle and CTA on one line */
+  .nav-inner {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  .nav-actions {
+    gap: var(--space-2);
+  }
+
+  .wordmark {
+    font-size: var(--text-sm);
+    white-space: nowrap;
+  }
+
+  .theme-switch {
+    --toggle-size: 10px;
+  }
+
+  .nav-actions .btn {
+    white-space: nowrap;
+    padding: var(--space-2) var(--space-3);
   }
 
   .nav-toggle {

@@ -2,7 +2,7 @@
 
 Documents the visual language used across `index.html`, `resume.html`, and `schedule.html`. All
 tokens live at the top of `frontend/css/base.css` as CSS custom properties on `:root` (light) and
-`body.dark-mode` (dark); theme is toggled by adding/removing the `dark-mode` class on `<body>`
+`html.dark-mode` (dark); theme is toggled by adding/removing the `dark-mode` class on `<html>`
 and persisted to `localStorage['theme']` (shared toggle logic in `frontend/js/theme.js`).
 
 ## Direction
@@ -157,6 +157,7 @@ Two-level system, used deliberately rather than everywhere:
 | None | — | Buttons, nav, CTA band — flat by design |
 | Resting | border only | Cards at rest |
 | Hover | `0 8px 20px` `shadow-md` | Card hover |
+| Neumorphic | `--shadow-neu-rest` / `--shadow-neu-hover` (paired light and dark shadows) | Homepage project, experience and education cards |
 | Modal | `0 20px 40px` `shadow-lg` | Modal — highest elevation on the site |
 
 ## Components
@@ -165,13 +166,19 @@ Two-level system, used deliberately rather than everywhere:
 |---|---|---|---|
 | Buttons | `.btn` `.btn-primary` `.btn-secondary` `.btn-sm` | pill radius, subtle opacity/border hover | no lift; `:focus-visible` accent ring |
 | Chips | `.skill` `.tag-pill` | one shared ruleset, pill radius | accent-soft fill + accent border/text on hover |
-| Cards | `.card` `.project-card` `.experience-card` `.education-card` | `radius-md`, border-only at rest, hover elevation | `.education-card` hover suppressed — not expandable, avoids a false "clickable" signal |
+| Cards | `.card` `.project-card` `.experience-card` `.education-card` | `radius-md`, border-only at rest, hover elevation. Homepage project, experience and education cards use the neumorphic treatment (`--radius-neu`, `--shadow-neu-*`) instead | `.education-card` hover keeps the resting shadow — not expandable, avoids a false "clickable" signal |
 | Résumé cards | `.resume-entry` `.resume-skill-group` `.resume-sidebar` | same card language as homepage | unifies the résumé's visual system with the rest of the site |
 | Modal | `.modal-overlay` `.modal-content` | `radius-lg`, highest elevation | focus-visible rings on close/action buttons |
-| Theme switch | `.theme-switch*` | checkbox-driven sun/moon toggle | own internal CSS vars, not wired into shared tokens — the one deliberately illustrative element on the page; `--toggle-size: 14px` (~79×35px) fits the header; native `<input type="checkbox">` under a `<label>` — keyboard-operable and exposes checked state to AT for free |
+| Theme switch | `.theme-switch*` | checkbox-driven sun/moon toggle | the one deliberately illustrative element on the page; its sky and night colours are component-scoped, but the night background follows `--bg`; `--toggle-size: 14px` (~79×35px) on desktop, `10px` at `≤768px`; native `<input type="checkbox">` is visually hidden (not `display: none`) so it stays in the Tab order, with the focus ring on the whole switch |
 | Mobile nav | `.nav-toggle` `.mobile-nav` | hamburger + absolutely-positioned dropdown at `≤768px` | replaces the old dead-end `.main-nav { display: none }`; full keyboard support (see [Accessibility](#accessibility)) |
 | Empty / error states | `.empty-state` `.error-state` | secondary-color vs. accent-color text | `fetchData()` returns tagged `{ ok, data }` so a failed fetch never looks identical to a genuinely-empty dataset |
 | Schedule placeholder | `.schedule-placeholder*` | "Coming soon" badge + message | shown when `CAL_LINK` is unset in `frontend/js/schedule.js`, so the page reads as intentional rather than broken |
+
+### Shared shell
+
+The header (skip link, wordmark, nav, theme switch, menu toggle, "Get in touch" CTA), the mobile nav panel, the footer CTA band and the theme `<head>` snippet are identical on every page. The canonical markup lives in `scripts/shell.template.html`; each page holds the same blocks between `<!-- partial:NAME:start -->` / `<!-- partial:NAME:end -->` markers. Run `node scripts/sync-shell.mjs` after editing the template, and `--check` (run by the deploy workflow) fails if a page has drifted.
+
+The nav always lists the same six links. `{{home}}` resolves to an empty string on `index.html` (so `#projects` stays an in-page anchor) and to `index.html` on the other pages (so `index.html#projects` works from any page).
 
 ## Résumé layout
 
@@ -185,7 +192,7 @@ elsewhere on the site.
 ```yaml
 resume-layout:
   max-width: 1100px
-  grid-template-columns: "260px 1fr"   # sidebar / main
+  grid-template-columns: "300px 1fr"   # sidebar / main
   gap: space.9
   padding: "space.7 space.6 space.10"
 
@@ -223,20 +230,20 @@ breakpoint-768:
 
 | Section | Container | Cards |
 |---|---|---|
-| Name, title, bio, contact links | `.resume-sidebar` | One card |
+| Name, title, bio, contact links, print button | `.resume-sidebar` | One card |
 | Each experience / education item | `.resume-entry` | One card per item |
 | Each skill category | `.resume-skill-group` | One card per group |
 | Certifications | `.resume-cert-card` | One card wraps the entire list |
 
 ## Print
 
-`resume.html`'s `@media print` block hides the header/CTA band, resets to black-on-white, and
+`print.css` hides the header, CTA band, skip link and anything marked `.no-print` (the résumé's print button), resets to black-on-white, and
 flattens the résumé's card styling so the on-screen treatment doesn't bleed color or shadows onto
 the printed page.
 
 ```yaml
 media: print
-hide: [".site-header", ".cta-band"]
+hide: [".site-header", ".cta-band", ".skip-link", ".no-print"]
 reset:
   background: "#ffffff"
   color: "#000000"
@@ -251,7 +258,11 @@ flatten:
 
 | Element | Behavior |
 |---|---|
-| All interactive elements | `:focus-visible` — 2px accent outline (buttons, nav links, chips' parent controls, modal close/action buttons, mobile-nav trigger, résumé contact links) |
+| All interactive elements | `:focus-visible` — 2px accent outline (buttons, nav links, chips' parent controls, modal close/action buttons, mobile-nav trigger and links, résumé contact links, theme switch) |
+| Skip link | First Tab stop on every page; jumps to `#main` |
+| Expandable project card | Enter/Space toggles the card only when the card itself has focus; the nested modal button keeps its own Enter/Space behaviour |
+| Theme switch | Space toggles it from the keyboard; focus ring on the whole switch |
+| Stats strip | Shows `–` when its data fails to load, rather than `0` |
 | Mobile nav panel | Uses the `hidden` attribute (not a CSS class) — inert to assistive tech and removed from Tab order when closed |
-| Mobile nav panel (open) | Focus moves in on open; Tab/Shift+Tab trapped within its links; Escape closes and returns focus to the trigger; click-outside closes |
-| Modal | Same focus-trap + Escape-to-close pattern (`trapFocus` in `frontend/js/main.js`), predates this redesign |
+| Mobile nav panel (open) | Focus moves in on open; Tab/Shift+Tab trapped within its links (`trapTabKey`); Escape closes and returns focus to the trigger; click-outside closes |
+| Modal | Same focus-trap + Escape-to-close pattern (`trapFocus` in `frontend/js/main.js`, which calls the shared `trapTabKey` in `frontend/js/a11y.js`); focus returns to the trigger on close |
