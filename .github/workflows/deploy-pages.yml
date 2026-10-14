@@ -23,12 +23,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Check shared shell partials are in sync
+        run: node scripts/sync-shell.mjs --check
+
       - name: Build site
         run: |
           mkdir -p _site
           cp -r frontend/. _site/
           cp -r data _site/data
           sed -i 's|`\.\./data/\${file}`|`data/${file}`|' _site/js/data.js
+          # Fail the deploy if the fetch path rewrite did not apply (data.js would 404 on Pages)
+          grep -qF '`data/${file}`' _site/js/data.js || { echo "data.js fetch path rewrite did not apply"; exit 1; }
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

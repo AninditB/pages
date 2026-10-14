@@ -42,7 +42,8 @@ frontend/
     schedule.js       Cal.com embed setup
 
 data/               projects.json, experience.json, education.json, skills.json, certifications.json
-docs/               DESIGN.md (design system reference), FLOWCHART.md (site flow diagrams), progress.md (changelog)
+scripts/            sync-shell.mjs (keeps the shared header/footer in sync), shell.template.html (canonical shell)
+docs/               DESIGN.md (design system reference), FLOWCHART.md (site flow diagrams), progress.md (changelog), plans/ (saved plans)
 ```
 
 `schedule.html` needs a real Cal.com event link set in `frontend/js/schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.
@@ -62,6 +63,16 @@ Then open `http://localhost:8000/frontend/` (or the port your server prints).
 ## Updating content
 
 Edit the relevant file under `data/` — no build step or restart required, just refresh the browser.
+
+## Editing the shared header and footer
+
+The header, mobile nav, footer and theme `<head>` snippet are the same on every page. Edit `scripts/shell.template.html`, then run:
+
+```bash
+node scripts/sync-shell.mjs
+```
+
+`node scripts/sync-shell.mjs --check` fails if any page has drifted; the deploy workflow runs it before building.
 
 ## Deployment
 

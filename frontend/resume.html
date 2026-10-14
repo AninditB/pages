@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anindit Bordoloi | Résumé</title>
+  <!-- partial:head-theme:start -->
+  <script>
+    // Apply the saved theme before first paint so dark pages don't flash light.
+    (function () {
+      try {
+        if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark-mode');
+      } catch (err) {}
+    })();
+  </script>
+<!-- partial:head-theme:end -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,11 +24,17 @@
   <link rel="stylesheet" href="css/print.css" />
 </head>
 <body>
-  <header class="site-header">
+  <!-- partial:header:start -->
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="site-header" id="top">
     <div class="nav-inner">
-      <a href="index.html" class="wordmark">Anindit Bordoloi</a>
-      <nav class="main-nav">
-        <a href="index.html">Portfolio</a>
+      <a href="index.html#top" class="wordmark">Anindit Bordoloi</a>
+      <nav class="main-nav" aria-label="Primary">
+        <a href="index.html#projects">Work</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="resume.html">Résumé</a>
         <a href="schedule.html">Book a call</a>
       </nav>
       <div class="nav-actions">
@@ -59,16 +75,21 @@
           <span class="nav-toggle-bar"></span>
           <span class="nav-toggle-bar"></span>
         </button>
-        <button id="print-btn" class="btn btn-primary btn-sm">Print résumé</button>
+        <a href="index.html#contact" class="btn btn-primary btn-sm">Get in touch</a>
       </div>
     </div>
     <nav id="mobile-nav" class="mobile-nav" hidden>
-      <a href="index.html">Portfolio</a>
+      <a href="index.html#projects">Work</a>
+      <a href="index.html#experience">Experience</a>
+      <a href="index.html#skills">Skills</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="resume.html">Résumé</a>
       <a href="schedule.html">Book a call</a>
     </nav>
   </header>
+<!-- partial:header:end -->
 
-  <main class="resume-layout">
+  <main class="resume-layout" id="main">
     <aside class="resume-sidebar">
       <h1 class="resume-name">Anindit Bordoloi</h1>
       <p class="resume-title">Software Engineer &amp; Forward Deployed Engineer</p>
@@ -85,26 +106,29 @@
         <a href="https://linkedin.com/in/anindit-bordoloi-452971109" class="resume-contact-item" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
         <a href="https://github.com/AninditB" class="resume-contact-item" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </div>
+      <div class="resume-actions no-print">
+        <button id="print-btn" class="btn btn-primary btn-sm" type="button">Print résumé</button>
+      </div>
     </aside>
 
     <div class="resume-main">
       <section class="resume-section">
-        <div class="section-label">Experience</div>
+        <h2 class="section-label">Experience</h2>
         <div id="resume-experience"><div class="loading"></div></div>
       </section>
 
       <section class="resume-section">
-        <div class="section-label">Skills</div>
+        <h2 class="section-label">Skills</h2>
         <div id="resume-skills" class="resume-skills-groups"><div class="loading"></div></div>
       </section>
 
       <section class="resume-section">
-        <div class="section-label">Education</div>
+        <h2 class="section-label">Education</h2>
         <div id="resume-education"><div class="loading"></div></div>
       </section>
 
       <section class="resume-section">
-        <div class="section-label">Certifications</div>
+        <h2 class="section-label">Certifications</h2>
         <div class="card resume-cert-card">
           <ul id="resume-certifications" class="resume-cert-list"></ul>
         </div>
@@ -112,9 +136,10 @@
     </div>
   </main>
 
+  <!-- partial:footer:start -->
   <footer class="cta-band" id="contact">
     <div class="cta-inner">
-      <h2>Contact me</h2>
+      <h2>Let's work together</h2>
       <p>Open to new opportunities — reach out any time, I usually reply within a day.</p>
       <a href="mailto:aninditbordoloi.mail011@gmail.com" class="email-pill">aninditbordoloi.mail011@gmail.com</a>
       <div class="cta-links">
@@ -123,9 +148,11 @@
       </div>
     </div>
   </footer>
+<!-- partial:footer:end -->
 
   <script src="js/data.js"></script>
   <script src="js/theme.js"></script>
+  <script src="js/a11y.js"></script>
   <script src="js/mobile-nav.js"></script>
   <script src="js/resume.js"></script>
 </body>

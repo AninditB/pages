@@ -1,6 +1,8 @@
 @media print {
   .site-header,
-  .cta-band {
+  .cta-band,
+  .no-print,
+  .skip-link {
     display: none;
   }
 

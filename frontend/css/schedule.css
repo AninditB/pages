@@ -1,6 +1,6 @@
 /* Schedule page */
 .schedule-layout {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: var(--space-7) var(--space-6) var(--space-10);
 }
@@ -25,6 +25,8 @@
 
 .schedule-embed {
   min-height: 600px;
+  max-width: 900px;
+  margin: 0 auto;
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -70,10 +72,6 @@
 }
 
 @media (max-width: 768px) {
-  .schedule-layout {
-    padding-top: var(--space-7);
-  }
-
   .schedule-embed {
     min-height: 500px;
   }
