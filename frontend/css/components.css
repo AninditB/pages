@@ -43,25 +43,20 @@
    Tracking is set per element from tokens (--tracking-eyebrow, --tracking-label). */
 .badge,
 .section-label,
-.resume-skill-group-label,
-.schedule-placeholder-badge {
+.resume-skill-group-label {
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   text-transform: uppercase;
   color: var(--accent);
 }
 
-/* Pill-shaped badges: the hero status badge and the schedule placeholder badge */
-.badge,
-.schedule-placeholder-badge {
+/* Pill-shaped badge: the hero status badge */
+.badge {
   display: inline-flex;
   align-items: center;
   background: var(--accent-soft);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-pill);
-}
-
-.badge {
   gap: var(--space-2);
   letter-spacing: var(--tracking-eyebrow);
   margin-bottom: var(--space-5);
@@ -75,11 +70,6 @@
 .resume-skill-group-label {
   letter-spacing: var(--tracking-eyebrow);
   margin-bottom: var(--space-3);
-}
-
-.schedule-placeholder-badge {
-  letter-spacing: var(--tracking-eyebrow);
-  margin-bottom: var(--space-4);
 }
 
 /* Icon buttons: round, outlined, 40px hit area. Display is set per element because the

@@ -11,7 +11,6 @@ A single-page portfolio site that renders project, experience, education, and sk
 - Share-to-LinkedIn, share-to-Twitter, and copy-link actions from each modal
 - Dark/light theme toggle with saved preference (`localStorage`)
 - Scroll-based section animations and a subtle parallax background
-- "Book a call" page (`schedule.html`) with an embedded Cal.com scheduler
 
 ## Tech stack
 
@@ -23,7 +22,6 @@ Plain HTML, CSS, and JavaScript — no framework, no build step, no dependencies
 frontend/
   index.html          Page markup and section containers
   resume.html         Résumé page markup
-  schedule.html       "Book a call" page markup
 
   css/
     tokens.css        Design tokens (light on :root, dark on html.dark-mode)
@@ -32,7 +30,6 @@ frontend/
     theme-toggle.css  Sun/moon theme-switch component
     layout.css        Homepage sections, card specifics, CTA band, shared responsive rules
     resume.css        Résumé page layout
-    schedule.css      Schedule page layout
     print.css         Résumé print styles
 
   js/
@@ -41,14 +38,13 @@ frontend/
     mobile-nav.js     Shared mobile nav open/close logic
     main.js           Homepage data fetching, card/modal rendering
     resume.js         Résumé data rendering, print button
-    schedule.js       Cal.com embed setup
 
 data/               projects.json, experience.json, education.json, skills.json, certifications.json
 scripts/            sync-shell.mjs (keeps the shared header/footer in sync), shell.template.html (canonical shell)
 docs/               DESIGN.md (design system reference), FLOWCHART.md (site flow diagrams), progress.md (changelog), plans/ (saved plans)
 ```
 
-`schedule.html` needs a real Cal.com event link set in `frontend/js/schedule.js`'s `CAL_LINK` constant before it will show a live booking calendar — until then it displays a placeholder message.
+A "Book a call" page (Cal.com scheduler) is archived in `archive/schedule/` and is not deployed. See its README to restore it.
 
 ## Local development
 
