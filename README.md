@@ -26,9 +26,11 @@ frontend/
   schedule.html       "Book a call" page markup
 
   css/
-    base.css          Reset, theme tokens, body/nav/button styles
+    tokens.css        Design tokens (light on :root, dark on html.dark-mode)
+    base.css          Reset, focus ring, body, skip link, header/nav
+    components.css    Buttons, badges, icon buttons, cards, lists, chips, modal, states
     theme-toggle.css  Sun/moon theme-switch component
-    layout.css        Homepage sections, cards, modal, shared responsive rules
+    layout.css        Homepage sections, card specifics, CTA band, shared responsive rules
     resume.css        Résumé page layout
     schedule.css      Schedule page layout
     print.css         Résumé print styles
