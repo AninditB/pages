@@ -32,11 +32,6 @@ flowchart TD
     R --> U[Click modal detail button]
     R --> V[Toggle theme]
     R --> W[Scroll page]
-    R --> S2["Click Book a call nav link"]
-
-    S2 --> X2[Navigate to schedule.html]
-    X2 --> Y2[Cal.com inline embed loads]
-    Y2 --> Z2[User picks a time and books]
 
     S --> X[Smooth scroll to section]
     T --> Y[Show or hide card details]

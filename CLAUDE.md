@@ -14,7 +14,7 @@ python -m http.server 8000
 
 Then open `http://localhost:8000/frontend/`. The `.claude/launch.json` config runs the same command as `portfolio` on port 8000.
 
-After editing the header, mobile nav, footer or theme `<head>` snippet, edit `scripts/shell.template.html` and run `node scripts/sync-shell.mjs` to update all three pages. `node scripts/sync-shell.mjs --check` verifies they match (the deploy workflow runs this).
+After editing the header, mobile nav, footer or theme `<head>` snippet, edit `scripts/shell.template.html` and run `node scripts/sync-shell.mjs` to update both pages. `node scripts/sync-shell.mjs --check` verifies they match (the deploy workflow runs this).
 
 Opening `frontend/*.html` via `file://` will fail because `fetch()` is blocked there.
 
@@ -33,13 +33,13 @@ There is no test suite. Verify changes by loading the pages in the browser at de
 
 **Shared shell is generated, not hand-maintained.** The header, mobile nav, footer and theme `<head>` snippet live in `scripts/shell.template.html` and are copied into each page between `<!-- partial:NAME:start/end -->` markers by `scripts/sync-shell.mjs`. Edit the template, not the pages.
 
-**Theme is an `<html>` class.** `theme.js` toggles `.dark-mode` on `<html>` and stores the choice in `localStorage['theme']`. An inline script in each page's `<head>` applies it before paint. All colors come from CSS custom properties defined in `frontend/css/base.css` on `:root` and `html.dark-mode`. Use the tokens rather than hard-coding colors.
+**Theme is an `<html>` class.** `theme.js` toggles `.dark-mode` on `<html>` and stores the choice in `localStorage['theme']`. An inline script in each page's `<head>` applies it before paint. All colors come from CSS custom properties defined in `frontend/css/tokens.css` on `:root` and `html.dark-mode`. Use the tokens rather than hard-coding colors.
 
-**Stylesheet load order matters.** `base.css` (tokens and reset) → `theme-toggle.css` → `layout.css` (shared sections, cards, modal, responsive rules) → page CSS (`resume.css`, `schedule.css`, `print.css`). Page-specific CSS overrides `layout.css`.
+**Stylesheet layers, loaded in this order on every page:** `tokens.css` → `base.css` (reset, focus ring, header) → `components.css` (buttons, badges, cards, lists, chips, modal, states) → `theme-toggle.css` → `layout.css` (homepage structure, card specifics, CTA band, responsive rules) → page CSS (`resume.css`, `print.css`). Later layers override earlier ones, so keep the order. Reuse a component class (`.card`, `.surface`, `.card--neu`, `.badge`, or the icon-button group `.modal-btn` / `.modal-close` / `.nav-toggle`) instead of copying its rules.
 
 **Homepage interactions are built with string templates.** `main.js` builds card HTML from `formatters`, expands cards with `toggleCard`, and opens a focus-trapped modal with `openModal`/`closeModal`. Card markup uses inline `onclick` handlers that call these globals.
 
-**Scheduling page is gated on a constant.** `frontend/js/schedule.js` has `CAL_LINK = ''`. The page shows a placeholder until a Cal.com event path is set there.
+**The "Book a call" page is archived.** It lives in `archive/schedule/`, which is not deployed or shell-synced. Its README explains how to restore it.
 
 ## Design reference
 

@@ -11,9 +11,6 @@
 
 .resume-sidebar {
   position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 0;
   padding: var(--space-6);
 }
 
@@ -83,9 +80,6 @@
   grid-template-columns: 220px 1fr;
   gap: var(--space-6);
   padding: var(--space-6);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 0;
 }
 
 .resume-entry + .resume-entry {
@@ -116,14 +110,6 @@
   font-size: var(--text-md);
 }
 
-.resume-entry-body ul {
-  padding-left: var(--list-indent);
-}
-
-.resume-entry-body li {
-  margin-bottom: var(--space-3);
-}
-
 .resume-skills-list {
   list-style: none;
   columns: 2;
@@ -143,19 +129,7 @@
 }
 
 .resume-skill-group {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 0;
   padding: var(--space-5);
-}
-
-.resume-skill-group-label {
-  color: var(--accent);
-  font-size: var(--text-xs);
-  font-weight: var(--font-semibold);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: var(--space-3);
 }
 
 .resume-skill-group .resume-skills-list {
@@ -163,7 +137,6 @@
 }
 
 .resume-cert-card {
-  border-radius: 0;
   padding: var(--space-2) var(--space-5);
 }
 

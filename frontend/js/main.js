@@ -35,7 +35,7 @@ function animateOnScroll() {
 // Enhanced formatters with expandable content and modal buttons
 const formatters = {
   projects: (item, index) => `
-    <div class="card project-card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
+    <div class="card card--neu project-card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
       <div class="project-thumb thumb-${(index % 3) + 1}">
         <span class="thumb-index">0${index + 1}</span>
       </div>
@@ -60,7 +60,7 @@ const formatters = {
   `,
 
   experience: (item, index) => `
-    <div class="card experience-card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
+    <div class="card card--neu experience-card expandable-card" role="button" tabindex="0" aria-expanded="false" onclick="toggleCard(this)" onkeydown="handleCardKeydown(event, this)">
       <div class="card-header">
         <strong>${item.role}</strong>
         <button class="modal-btn" onclick="event.stopPropagation(); openModal('experience', ${index})" title="View details" aria-label="View experience details">
@@ -82,7 +82,7 @@ const formatters = {
   `,
 
   education: (item) => `
-    <div class="card education-card">
+    <div class="card card--neu education-card">
       <strong>${item.degree}</strong>
       <div class="card-meta">${item.institution} · ${item.year}</div>
     </div>

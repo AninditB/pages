@@ -1,6 +1,6 @@
 # Design system
 
-Documents the visual language used across `index.html`, `resume.html`, and `schedule.html`. All
+Documents the visual language used across `index.html` and `resume.html`. All
 tokens live at the top of `frontend/css/base.css` as CSS custom properties on `:root` (light) and
 `html.dark-mode` (dark); theme is toggled by adding/removing the `dark-mode` class on `<html>`
 and persisted to `localStorage['theme']` (shared toggle logic in `frontend/js/theme.js`).
@@ -118,14 +118,14 @@ leading:
 | `lg` | Modal title |
 | `xl` | Résumé name |
 | `2xl` | Section `h2` |
-| `3xl` | CTA `h2`, schedule `h1` |
+| `3xl` | CTA `h2` |
 | `4xl` | Hero `h1` |
 | `stat` | Stats-strip numbers |
 
 ## Spacing & radius
 
-4px/8px rhythm. Section vertical rhythm is unified across all three pages at
-`space.10 space.6` (homepage sections) or `space.7 space.6 space.10` (résumé/schedule layouts).
+4px/8px rhythm. Section vertical rhythm is unified across both pages at
+`space.10 space.6` (homepage sections) or `space.7 space.6 space.10` (résumé layout).
 
 ```yaml
 space:
@@ -143,7 +143,7 @@ space:
 radius:
   xs:   0.4rem   # inline code
   sm:   0.6rem   # tech-stack box
-  md:   0.9rem   # cards, résumé cards, schedule embed
+  md:   0.9rem   # cards, résumé cards
   lg:   1rem     # modal
   pill: 999px    # buttons, badges, chips, circular icon buttons
 ```
@@ -157,7 +157,7 @@ Two-level system, used deliberately rather than everywhere:
 | None | — | Buttons, nav, CTA band — flat by design |
 | Resting | border only | Cards at rest |
 | Hover | `0 8px 20px` `shadow-md` | Card hover |
-| Neumorphic | `--shadow-neu-rest` / `--shadow-neu-hover` (paired light and dark shadows) | Homepage project, experience and education cards |
+| Neumorphic | `--shadow-neu-rest` / `--shadow-neu-hover` (paired light and dark shadows), class `.card--neu` | Homepage project, experience and education cards |
 | Modal | `0 20px 40px` `shadow-lg` | Modal — highest elevation on the site |
 
 ## Components
@@ -166,13 +166,12 @@ Two-level system, used deliberately rather than everywhere:
 |---|---|---|---|
 | Buttons | `.btn` `.btn-primary` `.btn-secondary` `.btn-sm` | pill radius, subtle opacity/border hover | no lift; `:focus-visible` accent ring |
 | Chips | `.skill` `.tag-pill` | one shared ruleset, pill radius | accent-soft fill + accent border/text on hover |
-| Cards | `.card` `.project-card` `.experience-card` `.education-card` | `radius-md`, border-only at rest, hover elevation. Homepage project, experience and education cards use the neumorphic treatment (`--radius-neu`, `--shadow-neu-*`) instead | `.education-card` hover keeps the resting shadow — not expandable, avoids a false "clickable" signal |
+| Cards | `.card` `.surface` `.surface--flat` `.card--neu` | `.surface` / `.card`: `radius-md`, border-only at rest, hover elevation on `.card`. `.surface--flat` squares the corners (résumé, print). `.card--neu` is the homepage neumorphic treatment (`--radius-neu`, `--shadow-neu-*`) | `.education-card` hover keeps the resting shadow — not expandable, avoids a false "clickable" signal |
 | Résumé cards | `.resume-entry` `.resume-skill-group` `.resume-sidebar` | same card language as homepage | unifies the résumé's visual system with the rest of the site |
 | Modal | `.modal-overlay` `.modal-content` | `radius-lg`, highest elevation | focus-visible rings on close/action buttons |
 | Theme switch | `.theme-switch*` | checkbox-driven sun/moon toggle | the one deliberately illustrative element on the page; its sky and night colours are component-scoped, but the night background follows `--bg`; `--toggle-size: 14px` (~79×35px) on desktop, `10px` at `≤768px`; native `<input type="checkbox">` is visually hidden (not `display: none`) so it stays in the Tab order, with the focus ring on the whole switch |
 | Mobile nav | `.nav-toggle` `.mobile-nav` | hamburger + absolutely-positioned dropdown at `≤768px` | replaces the old dead-end `.main-nav { display: none }`; full keyboard support (see [Accessibility](#accessibility)) |
 | Empty / error states | `.empty-state` `.error-state` | secondary-color vs. accent-color text | `fetchData()` returns tagged `{ ok, data }` so a failed fetch never looks identical to a genuinely-empty dataset |
-| Schedule placeholder | `.schedule-placeholder*` | "Coming soon" badge + message | shown when `CAL_LINK` is unset in `frontend/js/schedule.js`, so the page reads as intentional rather than broken |
 
 ### Shared shell
 

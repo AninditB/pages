@@ -5,7 +5,7 @@ function renderExperience(items) {
     return;
   }
   container.innerHTML = items.map(item => `
-    <div class="resume-entry card">
+    <div class="resume-entry card surface--flat">
       <div class="resume-entry-meta">
         <strong>${item.role}</strong>
         <div>${item.company}</div>
@@ -30,7 +30,7 @@ function renderEducation(items) {
     return;
   }
   container.innerHTML = items.map(item => `
-    <div class="resume-entry card">
+    <div class="resume-entry card surface--flat">
       <div class="resume-entry-meta">
         <div>${item.institution}</div>
         <div>${item.year}</div>
@@ -49,7 +49,7 @@ function renderSkills(groups) {
     return;
   }
   container.innerHTML = groups.map(group => `
-    <div class="resume-skill-group card">
+    <div class="resume-skill-group card surface--flat">
       <div class="resume-skill-group-label">${group.category}</div>
       <ul class="resume-skills-list">
         ${group.skills.map(skill => `<li>${skill}</li>`).join('')}

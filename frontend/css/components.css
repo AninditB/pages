@@ -1,0 +1,391 @@
+/* Reusable components. Pages compose these; page layout lives in layout.css and the page files.
+   Anything used on more than one page belongs here, and values come from tokens.css. */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text);
+}
+
+.btn-sm {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-xs);
+}
+
+/* Eyebrow labels: small, uppercase, accent-coloured text used for section and status labels.
+   Tracking is set per element from tokens (--tracking-eyebrow, --tracking-label). */
+.badge,
+.section-label,
+.resume-skill-group-label {
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Pill-shaped badge: the hero status badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--accent-soft);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  gap: var(--space-2);
+  letter-spacing: var(--tracking-eyebrow);
+  margin-bottom: var(--space-5);
+}
+
+.section-label {
+  letter-spacing: var(--tracking-label);
+  margin-bottom: var(--label-gap);
+}
+
+.resume-skill-group-label {
+  letter-spacing: var(--tracking-eyebrow);
+  margin-bottom: var(--space-3);
+}
+
+/* Icon buttons: round, outlined, 40px hit area. Display is set per element because the
+   nav toggle is hidden on desktop. */
+.modal-btn,
+.modal-close,
+.nav-toggle {
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  color: var(--text);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modal-btn:hover,
+.modal-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Surfaces: the default bordered panel. .surface--flat squares the corners (résumé, print). */
+.surface,
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.surface--flat {
+  border-radius: 0;
+}
+
+/* Interactive cards: hover lifts the border and adds a shadow */
+.card {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--text-secondary);
+  box-shadow: 0 8px 20px var(--shadow-md);
+}
+
+.expandable-card {
+  cursor: pointer;
+}
+
+.expandable-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Neumorphic (soft-UI) cards: the background matches the page and shadows lift from it.
+   Used by the homepage project, experience and education cards. */
+.card--neu {
+  background: var(--bg);
+  border: none;
+  border-radius: var(--radius-neu);
+  box-shadow: var(--shadow-neu-rest);
+  transition: box-shadow 0.2s ease;
+}
+
+.card--neu:hover {
+  box-shadow: var(--shadow-neu-hover);
+}
+
+/* Lists inside cards, modals and résumé entries share one indent and item spacing */
+.card-details ul,
+.modal-body ul,
+.resume-entry-body ul {
+  padding-left: var(--list-indent);
+}
+
+.card-details li,
+.modal-body li,
+.resume-entry-body li {
+  margin-bottom: var(--space-3);
+}
+
+/* Chips: skills and tags, laid out in a wrapping row */
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.skill,
+.tag-pill {
+  display: inline-block;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.skill:hover,
+.tag-pill:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 20px 40px var(--shadow-lg);
+  transform: scale(0.96) translateY(20px);
+  transition: all 0.25s ease;
+}
+
+.modal-content:focus {
+  outline: none;
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  flex: 1;
+}
+
+.modal-btn {
+  display: flex;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.modal-close {
+  display: flex;
+  font-size: var(--text-lg);
+  margin-left: var(--space-4);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.modal-meta {
+  margin-bottom: var(--space-5);
+}
+
+.modal-meta .company,
+.modal-meta .institution {
+  color: var(--accent);
+  font-weight: var(--font-medium);
+  font-size: var(--text-md);
+  margin-bottom: var(--space-2);
+}
+
+.modal-meta .duration,
+.modal-meta .year {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+}
+
+.modal-body {
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+}
+
+.modal-body h4 {
+  color: var(--text);
+  font-weight: var(--font-semibold);
+  margin: var(--space-5) 0 var(--space-3) 0;
+  font-size: var(--text-md);
+}
+
+.modal-body ul {
+  margin: var(--space-3) 0;
+}
+
+.modal-cta {
+  margin-top: var(--space-6);
+  text-align: center;
+}
+
+.modal-gpa {
+  margin: var(--space-4) 0;
+}
+
+.modal-gpa strong {
+  color: var(--accent);
+}
+
+.share-title {
+  color: var(--text);
+  margin-bottom: var(--space-4);
+  text-align: center;
+}
+
+.modal-body .tech-stack {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  margin: var(--space-4) 0;
+}
+
+.share-section {
+  margin-top: var(--space-6);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border);
+}
+
+.share-buttons {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.share-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.share-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Loading, empty and error states */
+.loading {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  border-top-color: var(--accent);
+  animation: spin 1s ease-in-out infinite;
+  margin: var(--space-6) auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state,
+.error-state {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: var(--space-8) var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.error-state {
+  color: var(--accent);
+}
+
+/* Entrance animations. .fade-in-up is staggered; each element sets its own animation-delay. */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out both;
+}
